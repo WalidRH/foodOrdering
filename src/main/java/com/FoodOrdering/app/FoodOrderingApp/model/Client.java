@@ -19,7 +19,8 @@ public class Client implements Serializable {
 	@SequenceGenerator(name="CLIENT_IDCLIENT_GENERATOR", sequenceName="ORDER_SEQUENCE")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLIENT_IDCLIENT_GENERATOR")
 	private int idclient;
-
+	
+	@Column(name="email")
 	private String email;
 
 	@Column(name="first_name")
@@ -28,7 +29,11 @@ public class Client implements Serializable {
 	@Column(name="last_name")
 	private String lastName;
 
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="role")
+	private String role;
 
 	//bi-directional many-to-one association to Order
 	@OneToMany(mappedBy="client")
@@ -75,6 +80,16 @@ public class Client implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public List<Order> getOrders() {
