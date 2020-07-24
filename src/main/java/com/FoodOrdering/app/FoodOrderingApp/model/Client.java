@@ -2,6 +2,9 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 
@@ -12,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="client")
 @NamedQuery(name="Client.findAll", query="SELECT c FROM Client c")
+@Component
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 

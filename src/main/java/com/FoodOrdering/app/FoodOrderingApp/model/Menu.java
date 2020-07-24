@@ -2,6 +2,9 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="menu")
 @NamedQuery(name="Menu.findAll", query="SELECT m FROM Menu m")
+@Component
 public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;
 

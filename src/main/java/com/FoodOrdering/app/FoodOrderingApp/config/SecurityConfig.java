@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import com.FoodOrdering.app.FoodOrderingApp.service.CustomeUserDetailsService;
+import com.FoodOrdering.app.FoodOrderingApp.service.impl.CustomeUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -52,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().authorizeRequests()
-				.antMatchers("/api/user/login").permitAll()
+				.antMatchers("/api/auth/login").permitAll()
 				.antMatchers("/api/user/registring").permitAll()
-				.antMatchers("/api/user/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
+				.antMatchers("/api/auth/**").hasAuthority("ADMIN").anyRequest().authenticated().and().csrf()
 				.disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
 				.apply(configurer);
 		http.cors();
