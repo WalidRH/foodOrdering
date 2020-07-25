@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,14 +14,15 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
+@Table(name="Order")
 @NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
 @Component
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ORDER_IDORDER_GENERATOR", sequenceName="ORDER_SEQUENCE")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORDER_IDORDER_GENERATOR")
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private int idOrder;
 
 	private String date_Order;

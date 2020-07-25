@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CLIENT_IDCLIENT_GENERATOR", sequenceName="ORDER_SEQUENCE")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLIENT_IDCLIENT_GENERATOR")
-	private int idclient;
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String idclient;
 	
 	@Column(name="email")
 	private String email;
@@ -46,11 +47,11 @@ public class Client implements Serializable {
 	public Client() {
 	}
 
-	public int getIdclient() {
+	public String getIdclient() {
 		return this.idclient;
 	}
 
-	public void setIdclient(int idclient) {
+	public void setIdclient(String idclient) {
 		this.idclient = idclient;
 	}
 

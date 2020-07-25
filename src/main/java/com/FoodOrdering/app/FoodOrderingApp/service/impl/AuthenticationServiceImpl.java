@@ -29,9 +29,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Autowired
 	JwtProvider jwtTokenProvider;
 
-	@Autowired
-	private CustomeUserDetailsService userService;
-
 	@Override
 	public ResponseEntity login(String email, String password) {
 		try {
@@ -49,9 +46,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public ResponseEntity signUp(Client client) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity signUp(Client client ) {
+		Client userExists = clientConnectorDB.getClient(client.getEmail());
+        if (userExists != null) {
+            throw new BadCredentialsException("User with username: " + client.getEmail() + " already exists");
+        }
+
+    	Map<Object, Object> model = new HashMap<>();
+        if(clientConnectorDB.saveClient(client) != null) model.put("message", "User registered successfully");	
+        else model.put("ERROR", "User registered Failed");
+        
+        return ok(model);
 	}
 
 }

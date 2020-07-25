@@ -1,6 +1,7 @@
 package com.FoodOrdering.app.FoodOrderingApp.connector;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.ClientConnector;
@@ -13,6 +14,12 @@ public class ClientConnectorImpl implements ClientConnector {
 	@Autowired
 	ClientRepository clientRepo;
 	
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+    
+    @Autowired
+    private Client clientModel;
+	
 	@Transactional
 	@Override
 	public Client getClient(int id) {
@@ -23,6 +30,16 @@ public class ClientConnectorImpl implements ClientConnector {
 	@Override
 	public Client getClient(String email) {
 		return clientRepo.findByEmail(email);
+	}
+
+	@Transactional
+	@Override
+	public Client saveClient(Client client) {
+		clientModel.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+		String ClientAccessRole = (client.getRole() != null ) ? client.getRole() : "USER" ; 
+		clientModel.setRole(ClientAccessRole);
+		return clientRepo.save(clientModel);
+	    
 	}
 
 }

@@ -10,4 +10,5 @@ public interface ClientConnector {
 	 */
 	public Client getClient(int id);
 	public Client getClient(String email);
+	public Client saveClient(Client client);
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.FoodOrdering.app.FoodOrderingApp.model.Client;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.AuthenticationServiceImpl;
 
 @SpringBootTest
@@ -14,10 +15,24 @@ class FoodOrderingAppApplicationTests {
 	@Autowired
 	AuthenticationServiceImpl authService;
 	
+	@Autowired
+	Client client;
+	
 	@Test
 	void serviceAuthentication() {
 		System.out.println("START TEST");
-		authService.login("emailTest@gmail.com", "123456");
+		authService.login("testWalid@gmail.com", "wiwi12345");
+	}
+	
+	@Test
+	void SignUP() {
+		System.out.println("START TEST - SIGNUP");
+		client.setEmail("testWalid@gmail.com");
+		client.setFirstName("Walid");
+		client.setLastName("Rahou");
+		client.setPassword("wiwi12345");
+		client.setRole("ADMIN");
+		authService.signUp(client);
 	}
 
 }
