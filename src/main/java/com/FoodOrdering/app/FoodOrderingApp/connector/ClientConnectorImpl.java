@@ -17,8 +17,6 @@ public class ClientConnectorImpl implements ClientConnector {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
     
-    @Autowired
-    private Client clientModel;
 	
 	@Transactional
 	@Override
@@ -35,10 +33,11 @@ public class ClientConnectorImpl implements ClientConnector {
 	@Transactional
 	@Override
 	public Client saveClient(Client client) {
-		clientModel.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-		String ClientAccessRole = (client.getRole() != null ) ? client.getRole() : "USER" ; 
-		clientModel.setRole(ClientAccessRole);
-		return clientRepo.save(clientModel);
+		System.out.println("WAL :: saveClient ---> "+client.getEmail());
+		client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+		String ClientAccessRole = (client.getRole() != null | client.getRole().equals("") ) ? client.getRole() : "USER" ; 
+		client.setRole(ClientAccessRole);
+		return clientRepo.save(client);
 	    
 	}
 

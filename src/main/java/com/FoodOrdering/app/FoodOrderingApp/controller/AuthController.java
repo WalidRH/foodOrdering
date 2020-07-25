@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.FoodOrdering.app.FoodOrderingApp.config.JwtProvider;
+import com.FoodOrdering.app.FoodOrderingApp.model.Client;
 import com.FoodOrdering.app.FoodOrderingApp.repository.ClientRepository;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.AuthenticationServiceImpl;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.CustomeUserDetailsService;
@@ -33,7 +34,7 @@ public class AuthController {
 
     
 	// Example URL :
-	// http://localhost:8080/api/user/login?email_login=hchab&Password=pass123
+	// http://localhost:8080/api/auth/login?email=hchab&password=pass123
 	@RequestMapping(value = "/login",
 			params = { "email","password" },
 			method = RequestMethod.GET,
@@ -42,17 +43,12 @@ public class AuthController {
 		return authService.login(email, password);
     }
 
-//    @SuppressWarnings("rawtypes")
-//    @PostMapping("/register")
-//    public ResponseEntity register(@RequestBody User user) {
-//        User userExists = userService.findUserByEmail(user.getEmail());
-//        if (userExists != null) {
-//            throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
-//        }
-//        userService.saveUser(user);
-//        Map<Object, Object> model = new HashMap<>();
-//        model.put("message", "User registered successfully");
-//        return ok(model);
-//    }
+	@PostMapping(value="/signup",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity register(@RequestBody Client client) {
+		System.out.println("----> email"+ client.getEmail());
+		System.out.println("----> password"+ client.getPassword());
+    	return authService.signUp(client);
+    }
 
 }

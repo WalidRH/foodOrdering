@@ -48,6 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public ResponseEntity signUp(Client client ) {
 		Client userExists = clientConnectorDB.getClient(client.getEmail());
+		System.out.println("WAL :: SignUP "+ client.getEmail());
         if (userExists != null) {
             throw new BadCredentialsException("User with username: " + client.getEmail() + " already exists");
         }
