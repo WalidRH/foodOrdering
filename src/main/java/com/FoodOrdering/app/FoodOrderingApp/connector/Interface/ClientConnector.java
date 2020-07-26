@@ -8,7 +8,6 @@ public interface ClientConnector {
 	 * @param id || email
 	 * @return Client
 	 */
-	public Client getClient(int id);
 	public Client getClient(String email);
 	public Client saveClient(Client client);
 }
