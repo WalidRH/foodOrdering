@@ -21,13 +21,12 @@ public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="MENU_IDMENU_GENERATOR", sequenceName="ORDER_SEQUENCE")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MENU_IDMENU_GENERATOR")
+	@Column(name="idmenu")
 	private int idmenu;
 
 	private String name;
 
-	private BigDecimal price;
+	private double price;
 
 	//bi-directional many-to-one association to Order
 	@OneToMany(mappedBy="menu")
@@ -52,11 +51,11 @@ public class Menu implements Serializable {
 		this.name = name;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

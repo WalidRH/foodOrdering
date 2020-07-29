@@ -8,4 +8,5 @@ public interface MenuRepository extends CrudRepository<Menu, Integer>{
 
 	Menu findById(int id);
 	Menu findByName(String name);
+	Iterable<Menu> findAll();
 }

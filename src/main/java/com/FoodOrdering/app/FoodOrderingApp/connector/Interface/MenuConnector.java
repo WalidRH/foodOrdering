@@ -6,6 +6,7 @@ public interface MenuConnector {
 
 	Menu getMenu(int id);
 	Menu getMenu(String name);
-	Menu AddMenu(Menu menu);
-	Menu EditMenu(Menu menu);
+	Iterable<Menu> getAll();
+	Menu saveMenu(Menu menu);
+	Menu editMenu(Menu menu);
 }
