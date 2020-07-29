@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.FoodOrdering.app.FoodOrderingApp.connector.impl.MenuConnectorImpl;
 import com.FoodOrdering.app.FoodOrderingApp.model.Client;
+import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.AuthenticationServiceImpl;
+import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -16,7 +19,13 @@ class FoodOrderingAppApplicationTests {
 	AuthenticationServiceImpl authService;
 	
 	@Autowired
+	MenuServiceImpl menuService;
+	
+	@Autowired
 	Client client;
+	
+	@Autowired
+	Menu menu;
 	
 	@Test
 	void serviceAuthentication() {
@@ -33,6 +42,14 @@ class FoodOrderingAppApplicationTests {
 		client.setPassword("wiwi12345");
 		client.setRole("ADMIN");
 		authService.signUp(client);
+	}
+	
+	@Test
+	void newMenu() {
+		System.out.println("START TEST - ADDING MENU");
+		menu.setName("emince Poulet");
+		menu.setPrice(36);
+		menuService.addMenu(menu);
 	}
 
 }

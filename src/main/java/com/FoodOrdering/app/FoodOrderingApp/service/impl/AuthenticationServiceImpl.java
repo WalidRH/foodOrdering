@@ -6,7 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import com.FoodOrdering.app.FoodOrderingApp.config.JwtProvider;
-import com.FoodOrdering.app.FoodOrderingApp.connector.ClientConnectorImpl;
+import com.FoodOrdering.app.FoodOrderingApp.connector.impl.ClientConnectorImpl;
+
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;

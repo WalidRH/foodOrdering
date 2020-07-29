@@ -25,7 +25,7 @@ public class CustomeUserDetailsService implements UserDetailsService {
 		Client client = clientRepo.findByEmail(email);
 		
 	    if(client != null) {
-	    	System.out.println("USER Found");
+	    	System.out.println("USER Found "+ client.getRole());
             return buildUserForAuthentication(client);
         } else {
             throw new UsernameNotFoundException("username not found");

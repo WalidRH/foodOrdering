@@ -26,7 +26,6 @@ public class ClientConnectorImpl implements ClientConnector {
 	@Transactional
 	@Override
 	public Client saveClient(Client client) {
-		System.out.println("WAL :: saveClient ---> "+client.getEmail());
 		client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
 		String ClientAccessRole = (client.getRole() != null && !client.getRole().isEmpty() ) ? client.getRole() : "USER" ; 
 		client.setRole(ClientAccessRole);
