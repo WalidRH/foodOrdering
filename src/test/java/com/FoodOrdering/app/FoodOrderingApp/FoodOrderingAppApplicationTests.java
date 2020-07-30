@@ -51,5 +51,11 @@ class FoodOrderingAppApplicationTests {
 		menu.setPrice(36);
 		menuService.addMenu(menu);
 	}
+	
+	@Test
+	void getAllMenu() {
+		System.out.println("START TEST - ADDING MENU");
+		System.out.println("----> "+menuService.getAll());
+	}
 
 }

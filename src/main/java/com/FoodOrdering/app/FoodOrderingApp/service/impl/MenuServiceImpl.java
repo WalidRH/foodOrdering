@@ -13,8 +13,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import com.FoodOrdering.app.FoodOrderingApp.connector.impl.MenuConnectorImpl;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.interfaces.MenuService;
-
-import antlr.collections.List;
+import java.util.List;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -25,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public ResponseEntity addMenu(Menu menu) {
 		Map<String, Object> model = new HashMap<>();
-		if (this.getMenu(menu.getName()) == null) {
+		if (menuConnector.getMenu(menu.getName()) == null) {
 			Menu menu_ = menuConnector.saveMenu(menu);
 			model.put("name", menu_.getName());
 			model.put("price", menu_.getPrice());
@@ -37,7 +36,8 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public ResponseEntity updateMenu(Menu menu) {
 		Map<String, Object> model = new HashMap<>();
-		if (this.getMenu(menu.getIdmenu()) != null) {
+		if (menuConnector.getMenu(menu.getName()) != null) {
+			menu.setIdmenu(menuConnector.getMenu(menu.getName()).getIdmenu());
 			Menu menu_ = menuConnector.editMenu(menu);
 			model.put("name", menu_.getName());
 			model.put("price", menu_.getPrice());
@@ -50,8 +50,12 @@ public class MenuServiceImpl implements MenuService {
 	public ResponseEntity getMenu(int id) {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(id);
+		if (menu != null) {
 		model.put("name", menu.getName());
 		model.put("price", menu.getPrice());
+		} else {
+			model.put("ERROR", "The menu deosn't existe");
+		}
 		return ok(model);
 
 	}
@@ -60,21 +64,28 @@ public class MenuServiceImpl implements MenuService {
 	public ResponseEntity getMenu(String name) {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(name);
-		model.put("name", menu.getName());
-		model.put("price", menu.getPrice());
+		if (menu != null) {
+			model.put("name", menu.getName());
+			model.put("price", menu.getPrice());
+		}else {
+			model.put("ERROR", "The menu deosn't existe");
+		}
 		return ok(model);
 	}
 
 	@Override
 	public ResponseEntity getAll() {
 		Iterable<Menu> menuDB = menuConnector.getAll();
-		Map<String, Object> menuList = new HashMap<>();
-		
+		List<HashMap<String, Object>> menuList = new ArrayList<HashMap<String, Object>>();
+
 		for (Menu menuElement : menuDB) {
-			menuList.put("name", menuElement.getName());
-			menuList.put("price", menuElement.getPrice());
+			System.out.println("menuElt ==> "+menuElement.getIdmenu());
+			HashMap<String, Object> menuMap = new HashMap<String, Object>();
+			menuMap.put("name", menuElement.getName());
+			menuMap.put("price", menuElement.getPrice());
+			menuList.add(menuMap);
 		}
-		return new ResponseEntity<Object>(menuList, HttpStatus.OK);
+		return new ResponseEntity(menuList, HttpStatus.OK);
 	}
 
 }
