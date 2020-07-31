@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 /**
@@ -25,17 +26,19 @@ public class Order implements Serializable {
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private int idOrder;
 
-	private String date_Order;
+	@Column(name = "date_Order")
+	private Date dateOrder;
 
-	@Column(name="date_ready")
-	private String dateReady;
+	@Column(name="serve_date")
+	private Date serveDate;
 
 	@Column(name="nb_person")
-	private BigDecimal nbPerson;
+	private int nbPerson;
 
-	private BigDecimal quantity;
+	private double quantity;
 
-	private String trackingState;
+	@Column(name = "trackingStatus")
+	private String trackingStatus;
 
 	//bi-directional many-to-one association to Client
 	@ManyToOne
@@ -58,44 +61,44 @@ public class Order implements Serializable {
 		this.idOrder = idOrder;
 	}
 
-	public String getDate_Order() {
-		return this.date_Order;
+	public Date getDateOrder() {
+		return this.dateOrder;
 	}
 
-	public void setDate_Order(String date_Order) {
-		this.date_Order = date_Order;
+	public void setDateOrder(Date date_Order) {
+		this.dateOrder = date_Order;
 	}
 
-	public String getDateReady() {
-		return this.dateReady;
+	public Date getDateReady() {
+		return this.serveDate;
 	}
 
-	public void setDateReady(String dateReady) {
-		this.dateReady = dateReady;
+	public void setDateReady(Date dateReady) {
+		this.serveDate = dateReady;
 	}
 
-	public BigDecimal getNbPerson() {
+	public int getNbPerson() {
 		return this.nbPerson;
 	}
 
-	public void setNbPerson(BigDecimal nbPerson) {
+	public void setNbPerson(int nbPerson) {
 		this.nbPerson = nbPerson;
 	}
 
-	public BigDecimal getQuantity() {
+	public double getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
 	public String getTrackingState() {
-		return this.trackingState;
+		return this.trackingStatus;
 	}
 
 	public void setTrackingState(String trackingState) {
-		this.trackingState = trackingState;
+		this.trackingStatus = trackingState;
 	}
 
 	public Client getClient() {
