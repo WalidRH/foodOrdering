@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "39479a10-0f59-46ab-83e8-56da39a763bb",
+		"name": "FoodOrdering_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login?email=RahouwWalid17@gmail.com&password=Wal17@",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "RahouwWalid17@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "Wal17@"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SetUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"RahouwWalid17@gmail.com\",\n    \"firstName\": \"Walid\",\n    \"lastName\": \"RH\",\n    \"password\": \"Wal17@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindMenuById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2MjAyMCwiZXhwIjoxNTk2MDY1NjIwfQ.x4J46r-VU00D9gn6sdo1Bj_S9HqY2K26OnzEplZkN7U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/menu/find?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"menu",
+						"find"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindMenuByName",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NjA3MDIwMSwiZXhwIjoxNTk2MDczODAxfQ.nfGUMfOMbUKAL4M23Xj0DJetKmTa8DKOOEgk8F_Ujt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/menu/find?name=emince Poulet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"menu",
+						"find"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "emince Poulet"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddingMenu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2NTAxNSwiZXhwIjoxNTk2MDY4NjE1fQ.RgQiN_ITI6BgeKkMYCO8E_fnhUCYNuJrQI0qY-sC-hI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"burger\",\n    \"price\": 25\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/menu/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"menu",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatingMenu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NjA3MDIwMSwiZXhwIjoxNTk2MDczODAxfQ.nfGUMfOMbUKAL4M23Xj0DJetKmTa8DKOOEgk8F_Ujt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idmenu\": 2,\n    \"name\": \"lasagne\",\n    \"price\": 50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/menu/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"menu",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindALL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2NTAxNSwiZXhwIjoxNTk2MDY4NjE1fQ.RgQiN_ITI6BgeKkMYCO8E_fnhUCYNuJrQI0qY-sC-hI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/menu/findAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"menu",
+						"findAll"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "31a67bf4-5849-44c2-b729-32ebec018e82",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "04081150-fe29-4579-8642-f8ce5beeb510",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
