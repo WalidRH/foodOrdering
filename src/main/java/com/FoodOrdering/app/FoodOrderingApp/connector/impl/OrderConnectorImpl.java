@@ -66,10 +66,30 @@ public class OrderConnectorImpl implements OrderConnector {
 		return orderRepo.findByClient(client);
 	}
 
+	
 	@Transactional
 	@Override
 	public Iterable<Order> getByMenu(Menu menu) {
 		return orderRepo.findByMenu(menu);
+	}
+	
+	
+	@Transactional
+	@Override
+	public Order insertOrder(Order order) {
+		return orderRepo.save(order);
+	}
+
+	@Override
+	public Order editOrder(Order order) {
+		Order orderEntity = this.getByIdOrder(order.getIdOrder());
+		orderEntity.setDateOrder(order.getDateOrder());
+		orderEntity.setDateReady(order.getDateReady());
+		orderEntity.setMenu(order.getMenu());
+		orderEntity.setNbPerson(order.getNbPerson());
+		orderEntity.setQuantity(order.getQuantity());
+		orderEntity.setTrackingState(order.getTrackingState());
+		return orderRepo.save(orderEntity);
 	}
 
 }

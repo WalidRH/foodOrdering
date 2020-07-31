@@ -8,8 +8,10 @@ import org.springframework.test.context.ActiveProfiles;
 import com.FoodOrdering.app.FoodOrderingApp.connector.impl.MenuConnectorImpl;
 import com.FoodOrdering.app.FoodOrderingApp.model.Client;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
+import com.FoodOrdering.app.FoodOrderingApp.model.Order;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.AuthenticationServiceImpl;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
+import com.FoodOrdering.app.FoodOrderingApp.service.impl.OrderServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,7 +24,13 @@ class FoodOrderingAppApplicationTests {
 	MenuServiceImpl menuService;
 	
 	@Autowired
+	OrderServiceImpl orderService;
+	
+	@Autowired
 	Client client;
+	
+	@Autowired
+	Order order;
 	
 	@Autowired
 	Menu menu;
@@ -56,6 +64,14 @@ class FoodOrderingAppApplicationTests {
 	void getAllMenu() {
 		System.out.println("START TEST - ADDING MENU");
 		System.out.println("----> "+menuService.getAll());
+	}
+	
+	@Test
+	void testMakeOrder() {
+		System.out.println("START TEST - MAKE ORDER");
+		Order order = new Order();
+		
+		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com") );
 	}
 
 }

@@ -10,6 +10,10 @@ public interface OrderConnector {
 	
 	public Order getByIdOrder(int id);
 	
+	public Order insertOrder(Order order);
+	
+	public Order editOrder(Order order);
+	
 	public Iterable<Order> getAll();
 	
 	public Iterable<Order> getByDateOrder(Date dateOrder);
@@ -25,5 +29,6 @@ public interface OrderConnector {
 	public Iterable<Order> getByClient(Client client);
 	
 	public Iterable<Order> getByMenu(Menu menu);
+	
 
 }
