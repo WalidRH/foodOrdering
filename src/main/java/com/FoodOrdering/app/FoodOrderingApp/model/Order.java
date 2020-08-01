@@ -15,7 +15,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="Order")
+@Table(name="order")
 @NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
 @Component
 public class Order implements Serializable {
