@@ -15,15 +15,13 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="order")
-@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
+@Table(name="ordering")
 @Component
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(name = "id_order")
 	private int idOrder;
 
 	@Column(name = "date_Order")
@@ -35,18 +33,19 @@ public class Order implements Serializable {
 	@Column(name="nb_person")
 	private int nbPerson;
 
+	@Column(name="quantity_order")
 	private double quantity;
 
-	@Column(name = "trackingStatus")
+	@Column(name = "tracking_state")
 	private String trackingStatus;
 
 	//bi-directional many-to-one association to Client
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_client")
 	private Client client;
 
 	//bi-directional many-to-one association to Menu
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 

@@ -80,6 +80,7 @@ public class OrderConnectorImpl implements OrderConnector {
 		return orderRepo.save(order);
 	}
 
+	@Transactional
 	@Override
 	public Order editOrder(Order order) {
 		Order orderEntity = this.getByIdOrder(order.getIdOrder());
@@ -90,6 +91,12 @@ public class OrderConnectorImpl implements OrderConnector {
 		orderEntity.setQuantity(order.getQuantity());
 		orderEntity.setTrackingState(order.getTrackingState());
 		return orderRepo.save(orderEntity);
+	}
+
+	@Transactional
+	@Override
+	public Iterable<Order> getByServeDateWhenNotNull() {
+		return orderRepo.findByServeDateNotNull();
 	}
 
 }

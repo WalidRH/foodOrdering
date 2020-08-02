@@ -1,10 +1,15 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.StyledEditorKit.ItalicAction;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -59,36 +64,50 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public ResponseEntity getOrder(int idOrder) {
-		// TODO Auto-generated method stub
-		return null;
+		Order order = orderCon.getByIdOrder(idOrder);
+		return ok(this.setModelOrder(order));
 	}
 
 	@Override
-	public ResponseEntity trackCommande(int orderId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity trackCommande(String trackingStatus) {
+		Iterable<Order> orderList = orderCon.getByTrackingStatus(trackingStatus);
+		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
+		return new ResponseEntity(orderLitMap, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity getOrder(Date date) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity getOrder(Date dateOrder) {
+		Iterable<Order> orderList = orderCon.getByDateOrder(dateOrder);
+		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
+		return new ResponseEntity(orderLitMap, HttpStatus.OK);
+		
 	}
 
 	@Override
-	public ResponseEntity getOrder(Client client) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity getOrder(String clientEmail) {
+		Client client = clientCon.getClient(clientEmail);
+		Iterable<Order> orderList = orderCon.getByClient(client);
+		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
+		return new ResponseEntity(orderLitMap, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity getPrebookingOrder() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterable<Order> orderList = orderCon.getByServeDateWhenNotNull();
+		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
+		return new ResponseEntity(orderLitMap, HttpStatus.OK);
 	}
 
-	private Map<String, Object> setModelOrder(Order order) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	private List<HashMap<String,Object>> getOrderListMap(Iterable<Order> orderList){
+		List<HashMap<String, Object>> orderLitMap = new ArrayList<HashMap<String, Object>>();
+		for (Order orderItem : orderList) {
+			orderLitMap.add(this.setModelOrder(orderItem));
+		}
+		return orderLitMap;
+	}
+	
+	private HashMap<String, Object> setModelOrder(Order order) {
+		HashMap<String, Object> model = new HashMap<String, Object>();
 		model.put("Ref", order.getIdOrder());
 		model.put("IdMenu", order.getMenu().getIdmenu());
 		model.put("Quantity", order.getQuantity());

@@ -1,5 +1,7 @@
 package com.FoodOrdering.app.FoodOrderingApp;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +24,9 @@ class FoodOrderingAppApplicationTests {
 	
 	@Autowired
 	MenuServiceImpl menuService;
+	
+	@Autowired
+	MenuConnectorImpl menuCon;
 	
 	@Autowired
 	OrderServiceImpl orderService;
@@ -69,9 +74,18 @@ class FoodOrderingAppApplicationTests {
 	@Test
 	void testMakeOrder() {
 		System.out.println("START TEST - MAKE ORDER");
-		Order order = new Order();
-		
+		menu = menuCon.getMenu(2);
+		order.setMenu(menu);
+		order.setDateOrder(new Date());
+		order.setQuantity(3);
+		order.setTrackingState("Onprepare");
 		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com") );
+	}
+	
+	@Test
+	void testGetOrder() {
+		System.out.println("START TEST - GET ORDER BY ID");
+		orderService.getOrder(3);
 	}
 
 }

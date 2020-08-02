@@ -26,4 +26,6 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 	public Iterable<Order> findByClient(Client client);
 	
 	public Iterable<Order> findByMenu(Menu menu);
+	
+	public Iterable<Order> findByServeDateNotNull();
 }

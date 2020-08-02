@@ -40,7 +40,7 @@ public interface OrderService {
 	 * @param orderId
 	 * @return
 	 */
-	public ResponseEntity trackCommande(int orderId);
+	public ResponseEntity trackCommande(String trackStatus);
 	
 	/**
 	 * get list of orders by date
@@ -54,7 +54,7 @@ public interface OrderService {
 	 * @param client
 	 * @return
 	 */
-	public ResponseEntity getOrder(Client client);
+	public ResponseEntity getOrder(String clientEmail);
 	
 	/**
 	 * 
