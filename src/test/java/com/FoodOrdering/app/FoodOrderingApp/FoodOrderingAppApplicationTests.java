@@ -75,11 +75,10 @@ class FoodOrderingAppApplicationTests {
 	void testMakeOrder() {
 		System.out.println("START TEST - MAKE ORDER");
 		menu = menuCon.getMenu(2);
-		order.setMenu(menu);
 		order.setDateOrder(new Date());
 		order.setQuantity(3);
 		order.setTrackingState("Onprepare");
-		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com") );
+		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com",2) );
 	}
 	
 	@Test

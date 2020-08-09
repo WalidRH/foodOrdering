@@ -27,9 +27,10 @@ public class OrderController {
 	OrderServiceImpl orderService;
 	
 	@PostMapping(value="/makeOrder",
+			params = { "email","idMenu" },
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity makeOrder(@RequestBody Order order, @RequestParam("email") String email) {
-		return orderService.makeOrder(order, email);
+	public ResponseEntity makeOrder(@RequestBody Order order, @RequestParam("email") String email, @RequestParam("idMenu") int id) {
+		return orderService.makeOrder(order, email, id);
 	}
 	
 	@PutMapping( value="/editOrder",

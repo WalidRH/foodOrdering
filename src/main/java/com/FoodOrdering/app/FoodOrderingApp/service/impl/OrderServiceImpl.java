@@ -8,6 +8,9 @@ import java.util.Map;
 
 import javax.swing.text.StyledEditorKit.ItalicAction;
 
+import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.MenuConnector;
+import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
+import org.apache.logging.log4j.util.SystemPropertiesPropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +30,27 @@ public class OrderServiceImpl implements OrderService {
 	OrderConnector orderCon;
 
 	@Autowired
+	MenuConnector menuCon;
+
+	@Autowired
 	ClientConnector clientCon;
 
 	@Override
-	public ResponseEntity makeOrder(Order order, String email) {
+	public ResponseEntity makeOrder(Order order, String email, int id) {
 		Client client = clientCon.getClient(email);
 		Map<String, Object> model;
 		if (client != null) {
 			order.setClient(client);
-			order = orderCon.insertOrder(order);
-			model = this.setModelOrder(order);
+			Menu menu = menuCon.getMenu(id);
+			if ( menu != null ) {
+				order.setMenu(menu);
+				order.setDateOrder(new Date());
+				order = orderCon.insertOrder(order);
+				model = this.setModelOrder(order);
+			}else{
+				model = new HashMap<String, Object>();
+				model.put("ERROR", "New Menu");
+			}
 		}
 		else {
 			model = new HashMap<String, Object>();

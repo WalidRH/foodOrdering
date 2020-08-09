@@ -6,7 +6,63 @@
 	},
 	"item": [
 		{
-			"name": "GetUser",
+			"name": "Orders",
+			"item": [
+				{
+					"name": "makeOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NzAwMTE1MiwiZXhwIjoxNTk3MDA0NzUyfQ.YUh-ea3TK8sbdOJFNvejpvnOTLWIWumKuwBr5RTDuMI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serveDate\": \"2020-08-09T21:52:51.289\",\n    \"quantity\": 3,\n    \"nbPerson\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/order/makeOrder?email=RahouwWalid17@gmail.com&idMenu=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"order",
+								"makeOrder"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "RahouwWalid17@gmail.com"
+								},
+								{
+									"key": "idMenu",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Authenticate",
 			"request": {
 				"method": "GET",
 				"header": [],

@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +26,11 @@ public class Order implements Serializable {
 	private int idOrder;
 
 	@Column(name = "date_Order")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Date dateOrder;
 
 	@Column(name="serve_date")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Date serveDate;
 
 	@Column(name="nb_person")
@@ -45,7 +48,8 @@ public class Order implements Serializable {
 	private Client client;
 
 	//bi-directional many-to-one association to Menu
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.ALL},
+			fetch = FetchType.EAGER)
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
