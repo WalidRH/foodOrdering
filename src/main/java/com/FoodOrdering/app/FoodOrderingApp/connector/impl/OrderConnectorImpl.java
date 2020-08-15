@@ -57,7 +57,7 @@ public class OrderConnectorImpl implements OrderConnector {
 	@Transactional
 	@Override
 	public Iterable<Order> getByTrackingStatus(String trackingStatus) {
-		return orderRepo.findByTrackingStatus(trackingStatus);
+		return orderRepo.findByTrackingState(trackingStatus);
 	}
 
 	@Transactional

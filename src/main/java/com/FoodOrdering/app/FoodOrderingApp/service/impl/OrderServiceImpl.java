@@ -1,5 +1,7 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,11 +62,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ResponseEntity updateOrder(Order order, String email) {
+	public ResponseEntity updateOrder(Order order) {
 		Map<String, Object> model;
-		if (order != null 
-				&& orderCon.getByIdOrder(order.getIdOrder()) != null 
-				&& order.getClient().getIdclient() == clientCon.getClient(email).getIdclient()) {
+		if (order != null && orderCon.getByIdOrder(order.getIdOrder()) != null) {
 			order = orderCon.editOrder(order);
 			model = this.setModelOrder(order);
 		}

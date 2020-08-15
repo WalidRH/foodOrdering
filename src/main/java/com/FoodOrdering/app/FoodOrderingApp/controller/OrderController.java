@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,9 +35,10 @@ public class OrderController {
 	}
 	
 	@PutMapping( value="/editOrder",
-			consumes = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity updateOrder(@RequestBody Order order, @RequestParam("email") String email) {
-		return orderService.updateOrder(order, email);
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity updateOrder(@RequestBody Order order) {
+		return orderService.updateOrder(order);
 	}
 	
 	@RequestMapping(value = "/findOrder",
@@ -57,7 +59,9 @@ public class OrderController {
 	@RequestMapping(value = "/findOrder",
 			params = { "orderDate" },
 			method = RequestMethod.GET)
-	public ResponseEntity getOrder( @RequestParam("orderDate") Date date) {
+	public ResponseEntity getOrder( @RequestParam("orderDate")
+										@DateTimeFormat(pattern = "yyyy-MM-dd")
+												Date date) {
 		return orderService.getOrder(date);
 	}
 	

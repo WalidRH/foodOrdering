@@ -4,10 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -40,7 +38,7 @@ public class Order implements Serializable {
 	private double quantity;
 
 	@Column(name = "tracking_state")
-	private String trackingStatus;
+	private String trackingState;
 
 	//bi-directional many-to-one association to Client
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -97,11 +95,11 @@ public class Order implements Serializable {
 	}
 
 	public String getTrackingState() {
-		return this.trackingStatus;
+		return this.trackingState;
 	}
 
 	public void setTrackingState(String trackingState) {
-		this.trackingStatus = trackingState;
+		this.trackingState = trackingState;
 	}
 
 	public Client getClient() {

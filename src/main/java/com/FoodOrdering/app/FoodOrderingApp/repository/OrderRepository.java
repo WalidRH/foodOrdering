@@ -21,7 +21,7 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 	
 	public Iterable<Order> findByQuantity(double quantity);
 	
-	public Iterable<Order> findByTrackingStatus(String trackingStatus);
+	public Iterable<Order> findByTrackingState(String trackingState);
 	
 	public Iterable<Order> findByClient(Client client);
 	

@@ -23,10 +23,9 @@ public interface OrderService {
 	/**
 	 * updating the existing commande
 	 * @param order
-	 * @param email
 	 * @return
 	 */
-	public ResponseEntity updateOrder(Order order, String email);
+	public ResponseEntity updateOrder(Order order);
 	
 	/**
 	 * get order by id
