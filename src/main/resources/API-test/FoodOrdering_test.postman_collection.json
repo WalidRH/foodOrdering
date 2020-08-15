@@ -9,6 +9,47 @@
 			"name": "Orders",
 			"item": [
 				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db39bf9d-54ed-4cc2-b845-e798a78141ef",
+								"exec": [
+									"var headerValue = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"authToken\", headerValue.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/auth/login?email=RahouwWalid17@gmail.com&password=Wal17@",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "RahouwWalid17@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "Wal17@"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "makeOrder",
 					"request": {
 						"auth": {
@@ -16,7 +57,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NzAwMTE1MiwiZXhwIjoxNTk3MDA0NzUyfQ.YUh-ea3TK8sbdOJFNvejpvnOTLWIWumKuwBr5RTDuMI",
+									"value": "{{authToken}}",
 									"type": "string"
 								}
 							]
@@ -25,7 +66,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"serveDate\": \"2020-08-09T21:52:51.289\",\n    \"quantity\": 3,\n    \"nbPerson\": 2\n}",
+							"raw": "{\n    \"quantity\": 3\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -33,14 +74,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/order/makeOrder?email=RahouwWalid17@gmail.com&idMenu=1",
-							"protocol": "http",
+							"raw": "{{localBasedURL}}/order/makeOrder?email=RahouwWalid17@gmail.com&idMenu=1",
 							"host": [
-								"localhost"
+								"{{localBasedURL}}"
 							],
-							"port": "8080",
 							"path": [
-								"api",
 								"order",
 								"makeOrder"
 							],
@@ -57,24 +95,173 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "editOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idOrder\":5,\n    \"quantity\":3,\n    \"dateOrder\": \"2020-09-19T18:52:51.289\",\n    \"trackingState\": \"OnServed\",\n    \"client\":{\n        \"idclient\":\"402881e973833e870173833e8a6c0000\"\n    },\n    \"menu\":{\n        \"idmenu\":3,\n        \"name\":\"burger\",\n        \"price\":25\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedURL}}/order/editOrder",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"editOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Order by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/order/findOrder?id=7",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"findOrder"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Order by status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/order/findOrder?status=OnServed",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"findOrder"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "OnServed"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Order by order date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/order/findOrder?orderDate=2020-08-15 18:59:17.8",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"findOrder"
+							],
+							"query": [
+								{
+									"key": "orderDate",
+									"value": "2020-08-15 18:59:17.8"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4d08217b-a191-42e9-ad9d-d09abd9f1aed",
+						"exec": [
+							"var headerValue = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"authToken\", headerValue.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/auth/login?email=RahouwWalid17@gmail.com&password=Wal17@",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/auth/login?email=RahouwWalid17@gmail.com&password=Wal17@",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"auth",
 						"login"
 					],
@@ -93,7 +280,7 @@
 			"response": []
 		},
 		{
-			"name": "SetUser",
+			"name": "SignUP",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -107,14 +294,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/auth/signup",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/auth/signup",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"auth",
 						"signup"
 					]
@@ -130,7 +314,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2MjAyMCwiZXhwIjoxNTk2MDY1NjIwfQ.x4J46r-VU00D9gn6sdo1Bj_S9HqY2K26OnzEplZkN7U",
+							"value": "{{authToken}}",
 							"type": "string"
 						}
 					]
@@ -138,14 +322,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/menu/find?id=1",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/menu/find?id=1",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"menu",
 						"find"
 					],
@@ -167,7 +348,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NjA3MDIwMSwiZXhwIjoxNTk2MDczODAxfQ.nfGUMfOMbUKAL4M23Xj0DJetKmTa8DKOOEgk8F_Ujt8",
+							"value": "{{authToken}}",
 							"type": "string"
 						}
 					]
@@ -175,14 +356,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/menu/find?name=emince Poulet",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/menu/find?name=emince Poulet",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"menu",
 						"find"
 					],
@@ -204,7 +382,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2NTAxNSwiZXhwIjoxNTk2MDY4NjE1fQ.RgQiN_ITI6BgeKkMYCO8E_fnhUCYNuJrQI0qY-sC-hI",
+							"value": "{{authToken}}",
 							"type": "string"
 						}
 					]
@@ -221,14 +399,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/menu/add",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/menu/add",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"menu",
 						"add"
 					]
@@ -244,7 +419,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSYWhvdXdXYWxpZDE3QGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTU5NjA3MDIwMSwiZXhwIjoxNTk2MDczODAxfQ.nfGUMfOMbUKAL4M23Xj0DJetKmTa8DKOOEgk8F_Ujt8",
+							"value": "{{authToken}}",
 							"type": "string"
 						}
 					]
@@ -261,14 +436,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/menu/edit",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/menu/edit",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"menu",
 						"edit"
 					]
@@ -284,7 +456,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0V2FsaWRAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTU5NjA2NTAxNSwiZXhwIjoxNTk2MDY4NjE1fQ.RgQiN_ITI6BgeKkMYCO8E_fnhUCYNuJrQI0qY-sC-hI",
+							"value": "{{authToken}}",
 							"type": "string"
 						}
 					]
@@ -292,14 +464,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/menu/findAll",
-					"protocol": "http",
+					"raw": "{{localBasedURL}}/menu/findAll",
 					"host": [
-						"localhost"
+						"{{localBasedURL}}"
 					],
-					"port": "8080",
 					"path": [
-						"api",
 						"menu",
 						"findAll"
 					]
