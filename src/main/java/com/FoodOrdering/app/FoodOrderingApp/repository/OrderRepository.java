@@ -1,0 +1,35 @@
+package com.FoodOrdering.app.FoodOrderingApp.repository;
+
+
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.FoodOrdering.app.FoodOrderingApp.model.Client;
+import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
+import com.FoodOrdering.app.FoodOrderingApp.model.Order;
+
+import java.sql.Timestamp;
+
+public interface OrderRepository extends CrudRepository<Order, Integer>{
+	public Order findByIdOrder(int id);
+	
+	public Iterable<Order> findAll();
+
+	@Query("select o from Order o where DATE(o.dateOrder) like :dateOrder")
+	public Iterable<Order> findByDateOrder(Timestamp dateOrder);
+	
+	public Iterable<Order> findByServeDate(Timestamp serveDate);
+	
+	public Iterable<Order> findByNbPerson(int nbPerson);
+	
+	public Iterable<Order> findByQuantity(double quantity);
+	
+	public Iterable<Order> findByTrackingState(String trackingState);
+	
+	public Iterable<Order> findByClient(Client client);
+	
+	public Iterable<Order> findByMenu(Menu menu);
+	
+	public Iterable<Order> findByServeDateNotNull();
+}

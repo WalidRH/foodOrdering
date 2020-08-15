@@ -1,5 +1,9 @@
 package com.FoodOrdering.app.FoodOrderingApp;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,8 +12,10 @@ import org.springframework.test.context.ActiveProfiles;
 import com.FoodOrdering.app.FoodOrderingApp.connector.impl.MenuConnectorImpl;
 import com.FoodOrdering.app.FoodOrderingApp.model.Client;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
+import com.FoodOrdering.app.FoodOrderingApp.model.Order;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.AuthenticationServiceImpl;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
+import com.FoodOrdering.app.FoodOrderingApp.service.impl.OrderServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,7 +28,16 @@ class FoodOrderingAppApplicationTests {
 	MenuServiceImpl menuService;
 	
 	@Autowired
+	MenuConnectorImpl menuCon;
+	
+	@Autowired
+	OrderServiceImpl orderService;
+	
+	@Autowired
 	Client client;
+	
+	@Autowired
+	Order order;
 	
 	@Autowired
 	Menu menu;
@@ -56,6 +71,24 @@ class FoodOrderingAppApplicationTests {
 	void getAllMenu() {
 		System.out.println("START TEST - ADDING MENU");
 		System.out.println("----> "+menuService.getAll());
+	}
+	
+	@Test
+	void testMakeOrder() {
+		System.out.println("START TEST - MAKE ORDER");
+		menu = menuCon.getMenu(2);
+		java.util.Date curentDate = new java.util.Date();
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		order.setDateOrder(new Timestamp(System.currentTimeMillis()));
+		order.setQuantity(3);
+		order.setTrackingState("Onprepare");
+		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com",2) );
+	}
+	
+	@Test
+	void testGetOrder() {
+		System.out.println("START TEST - GET ORDER BY ID");
+		orderService.getOrder(3);
 	}
 
 }

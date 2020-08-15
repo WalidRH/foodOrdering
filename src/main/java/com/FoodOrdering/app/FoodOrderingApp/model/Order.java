@@ -3,10 +3,10 @@ package com.FoodOrdering.app.FoodOrderingApp.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 
 /**
@@ -14,36 +14,40 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(name="Order")
-@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
+@Table(name="ordering")
 @Component
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(name = "id_order")
 	private int idOrder;
 
-	private String date_Order;
+	@Column(name = "date_Order")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+	private Timestamp dateOrder;
 
-	@Column(name="date_ready")
-	private String dateReady;
+	@Column(name="serve_date")
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+	private Timestamp serveDate;
 
 	@Column(name="nb_person")
-	private BigDecimal nbPerson;
+	private int nbPerson;
 
-	private BigDecimal quantity;
+	@Column(name="quantity_order")
+	private double quantity;
 
+	@Column(name = "tracking_state")
 	private String trackingState;
 
 	//bi-directional many-to-one association to Client
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_client")
 	private Client client;
 
 	//bi-directional many-to-one association to Menu
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL},
+			fetch = FetchType.EAGER)
 	@JoinColumn(name="id_menu")
 	private Menu menu;
 
@@ -58,35 +62,35 @@ public class Order implements Serializable {
 		this.idOrder = idOrder;
 	}
 
-	public String getDate_Order() {
-		return this.date_Order;
+	public Timestamp getDateOrder() {
+		return dateOrder;
 	}
 
-	public void setDate_Order(String date_Order) {
-		this.date_Order = date_Order;
+	public Timestamp getServeDate() {
+		return serveDate;
 	}
 
-	public String getDateReady() {
-		return this.dateReady;
+	public void setDateOrder(Timestamp dateOrder) {
+		this.dateOrder = dateOrder;
 	}
 
-	public void setDateReady(String dateReady) {
-		this.dateReady = dateReady;
+	public void setServeDate(Timestamp serveDate) {
+		this.serveDate = serveDate;
 	}
 
-	public BigDecimal getNbPerson() {
+	public int getNbPerson() {
 		return this.nbPerson;
 	}
 
-	public void setNbPerson(BigDecimal nbPerson) {
+	public void setNbPerson(int nbPerson) {
 		this.nbPerson = nbPerson;
 	}
 
-	public BigDecimal getQuantity() {
+	public double getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
