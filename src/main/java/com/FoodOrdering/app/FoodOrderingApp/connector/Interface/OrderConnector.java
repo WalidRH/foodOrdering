@@ -1,6 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.connector.Interface;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.FoodOrdering.app.FoodOrderingApp.model.Client;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
@@ -16,9 +16,9 @@ public interface OrderConnector {
 	
 	public Iterable<Order> getAll();
 	
-	public Iterable<Order> getByDateOrder(Date dateOrder);
+	public Iterable<Order> getByDateOrder(Timestamp dateOrder);
 	
-	public Iterable<Order> getByServeDate(Date serveDate);
+	public Iterable<Order> getByServeDate(Timestamp serveDate);
 	
 	public Iterable<Order> getByNbPerson(int nbPerson);
 	

@@ -3,7 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +46,10 @@ public class OrderServiceImpl implements OrderService {
 			Menu menu = menuCon.getMenu(id);
 			if ( menu != null ) {
 				order.setMenu(menu);
-				order.setDateOrder(new Date());
+				long now = System.currentTimeMillis();
+				Timestamp date = new Timestamp(now);
+
+				order.setDateOrder(date);
 				order = orderCon.insertOrder(order);
 				model = this.setModelOrder(order);
 			}else{
@@ -90,9 +93,21 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ResponseEntity getOrder(Date dateOrder) {
-		Iterable<Order> orderList = orderCon.getByDateOrder(dateOrder);
-		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
+	public ResponseEntity getOrderbyOrderdate(String dateOrder) {
+		List<HashMap<String, Object>> orderLitMap;
+		Timestamp dateOrdered = Timestamp.valueOf(dateOrder);
+		Iterable<Order> ordersList = orderCon.getByDateOrder(dateOrdered);
+		List<Order> ordersWithSameDateTime = new ArrayList<>();
+		for (Order orderItem: ordersList) {
+			Timestamp dbDateOrder = orderItem.getDateOrder();
+			if (dbDateOrder.equals(dateOrdered)){
+				ordersWithSameDateTime.add(orderItem);
+			}
+		}
+		if (!ordersWithSameDateTime.isEmpty()) {
+			ordersList = ordersWithSameDateTime;
+		}
+		orderLitMap = this.getOrderListMap(ordersList);
 		return new ResponseEntity(orderLitMap, HttpStatus.OK);
 		
 	}
@@ -127,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
 		model.put("Quantity", order.getQuantity());
 		model.put("Tracking-Status", order.getTrackingState());
 		model.put("Order-Date", order.getDateOrder());
-		if (order.getDateReady() != null && order.getNbPerson() == 0) {
+		if (order.getServeDate() != null && order.getNbPerson() == 0) {
 			model.put("ref", order.getIdOrder());
 			model.put("ref", order.getIdOrder());
 		}

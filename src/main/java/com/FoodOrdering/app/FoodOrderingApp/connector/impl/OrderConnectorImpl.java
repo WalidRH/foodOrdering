@@ -1,6 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.connector.impl;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,13 +32,13 @@ public class OrderConnectorImpl implements OrderConnector {
 
 	@Transactional
 	@Override
-	public Iterable<Order> getByDateOrder(Date dateOrder) {
+	public Iterable<Order> getByDateOrder(Timestamp dateOrder) {
 		return orderRepo.findByDateOrder(dateOrder);
 	}
 
 	@Transactional
 	@Override
-	public Iterable<Order> getByServeDate(Date serveDate) {
+	public Iterable<Order> getByServeDate(Timestamp serveDate) {
 		return orderRepo.findByServeDate(serveDate);
 	}
 
@@ -85,7 +85,7 @@ public class OrderConnectorImpl implements OrderConnector {
 	public Order editOrder(Order order) {
 		Order orderEntity = this.getByIdOrder(order.getIdOrder());
 		orderEntity.setDateOrder(order.getDateOrder());
-		orderEntity.setDateReady(order.getDateReady());
+		orderEntity.setServeDate(order.getServeDate());
 		orderEntity.setMenu(order.getMenu());
 		orderEntity.setNbPerson(order.getNbPerson());
 		orderEntity.setQuantity(order.getQuantity());

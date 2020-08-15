@@ -6,7 +6,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -25,11 +25,11 @@ public class Order implements Serializable {
 
 	@Column(name = "date_Order")
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-	private Date dateOrder;
+	private Timestamp dateOrder;
 
 	@Column(name="serve_date")
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-	private Date serveDate;
+	private Timestamp serveDate;
 
 	@Column(name="nb_person")
 	private int nbPerson;
@@ -62,20 +62,20 @@ public class Order implements Serializable {
 		this.idOrder = idOrder;
 	}
 
-	public Date getDateOrder() {
-		return this.dateOrder;
+	public Timestamp getDateOrder() {
+		return dateOrder;
 	}
 
-	public void setDateOrder(Date date_Order) {
-		this.dateOrder = date_Order;
+	public Timestamp getServeDate() {
+		return serveDate;
 	}
 
-	public Date getDateReady() {
-		return this.serveDate;
+	public void setDateOrder(Timestamp dateOrder) {
+		this.dateOrder = dateOrder;
 	}
 
-	public void setDateReady(Date dateReady) {
-		this.serveDate = dateReady;
+	public void setServeDate(Timestamp serveDate) {
+		this.serveDate = serveDate;
 	}
 
 	public int getNbPerson() {

@@ -1,6 +1,7 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.interfaces;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.http.ResponseEntity;
 
@@ -29,14 +30,14 @@ public interface OrderService {
 	
 	/**
 	 * get order by id
-	 * @param order
+	 * @param idOrder
 	 * @return
 	 */
 	public ResponseEntity getOrder(int idOrder);
 	
 	/**
 	 * return the track status of the order
-	 * @param orderId
+	 * @param trackStatus
 	 * @return
 	 */
 	public ResponseEntity trackCommande(String trackStatus);
@@ -46,11 +47,11 @@ public interface OrderService {
 	 * @param date
 	 * @return
 	 */
-	public ResponseEntity getOrder(Date date);
-	
+	public ResponseEntity getOrderbyOrderdate(String date);
+
 	/**
 	 * get list of orders by client
-	 * @param client
+	 * @param clientEmail
 	 * @return
 	 */
 	public ResponseEntity getOrder(String clientEmail);

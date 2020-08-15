@@ -1,7 +1,9 @@
 package com.FoodOrdering.app.FoodOrderingApp.controller;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
+import com.FoodOrdering.app.FoodOrderingApp.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -25,7 +27,7 @@ import com.FoodOrdering.app.FoodOrderingApp.service.impl.OrderServiceImpl;
 public class OrderController {
 
 	@Autowired
-	OrderServiceImpl orderService;
+	OrderService orderService;
 	
 	@PostMapping(value="/makeOrder",
 			params = { "email","idMenu" },
@@ -59,10 +61,9 @@ public class OrderController {
 	@RequestMapping(value = "/findOrder",
 			params = { "orderDate" },
 			method = RequestMethod.GET)
-	public ResponseEntity getOrder( @RequestParam("orderDate")
-										@DateTimeFormat(pattern = "yyyy-MM-dd")
-												Date date) {
-		return orderService.getOrder(date);
+	public ResponseEntity getOrderApi( @RequestParam("orderDate")
+											String date) {
+		return orderService.getOrderbyOrderdate(date);
 	}
 	
 	@RequestMapping(value = "/findOrder",

@@ -1,5 +1,7 @@
 package com.FoodOrdering.app.FoodOrderingApp;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -75,7 +77,9 @@ class FoodOrderingAppApplicationTests {
 	void testMakeOrder() {
 		System.out.println("START TEST - MAKE ORDER");
 		menu = menuCon.getMenu(2);
-		order.setDateOrder(new Date());
+		java.util.Date curentDate = new java.util.Date();
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		order.setDateOrder(new Timestamp(System.currentTimeMillis()));
 		order.setQuantity(3);
 		order.setTrackingState("Onprepare");
 		System.out.println("----> "+orderService.makeOrder(order, "testWalid@gmail.com",2) );
