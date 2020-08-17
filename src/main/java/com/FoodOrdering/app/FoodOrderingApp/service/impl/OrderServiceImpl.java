@@ -121,8 +121,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ResponseEntity getPrebookingOrder() {
-		Iterable<Order> orderList = orderCon.getByServeDateWhenNotNull();
+	public ResponseEntity getPrebookingOrder( String reserveDate) {
+		Timestamp dateReserving = Timestamp.valueOf(reserveDate);
+		Iterable<Order> orderList = orderCon.getByServeDate(dateReserving);
 		List<HashMap<String, Object>> orderLitMap = this.getOrderListMap(orderList);
 		return new ResponseEntity(orderLitMap, HttpStatus.OK);
 	}

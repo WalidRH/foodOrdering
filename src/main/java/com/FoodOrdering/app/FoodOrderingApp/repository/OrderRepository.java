@@ -18,7 +18,8 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 
 	@Query("select o from Order o where DATE(o.dateOrder) like :dateOrder")
 	public Iterable<Order> findByDateOrder(Timestamp dateOrder);
-	
+
+	@Query("select o from Order o where DATE(o.serveDate) like :serveDate")
 	public Iterable<Order> findByServeDate(Timestamp serveDate);
 	
 	public Iterable<Order> findByNbPerson(int nbPerson);
@@ -30,6 +31,4 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 	public Iterable<Order> findByClient(Client client);
 	
 	public Iterable<Order> findByMenu(Menu menu);
-	
-	public Iterable<Order> findByServeDateNotNull();
 }
