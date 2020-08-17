@@ -61,8 +61,7 @@ public class OrderController {
 	@RequestMapping(value = "/findOrder",
 			params = { "orderDate" },
 			method = RequestMethod.GET)
-	public ResponseEntity getOrderApi( @RequestParam("orderDate")
-											String date) {
+	public ResponseEntity getOrderApi( @RequestParam("orderDate") String date) {
 		return orderService.getOrderbyOrderdate(date);
 	}
 	
@@ -74,8 +73,9 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/PreBookingOrders",
+			params = { "reserveDate" },
 			method = RequestMethod.GET)
-	public ResponseEntity getPrebookingOrder() {
-		return orderService.getPrebookingOrder();
+	public ResponseEntity getPrebookingOrder(@RequestParam("reserveDate") String reserveDate) {
+		return orderService.getPrebookingOrder(reserveDate);
 	}
 }

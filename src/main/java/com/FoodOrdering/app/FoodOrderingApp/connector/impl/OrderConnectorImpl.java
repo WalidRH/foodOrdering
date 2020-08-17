@@ -92,11 +92,4 @@ public class OrderConnectorImpl implements OrderConnector {
 		orderEntity.setTrackingState(order.getTrackingState());
 		return orderRepo.save(orderEntity);
 	}
-
-	@Transactional
-	@Override
-	public Iterable<Order> getByServeDateWhenNotNull() {
-		return orderRepo.findByServeDateNotNull();
-	}
-
 }
