@@ -543,6 +543,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "FindMenuByCategorie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localBasedURL}}/menu/find?categorie=sandwich",
+					"host": [
+						"{{localBasedURL}}"
+					],
+					"path": [
+						"menu",
+						"find"
+					],
+					"query": [
+						{
+							"key": "categorie",
+							"value": "sandwich"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
