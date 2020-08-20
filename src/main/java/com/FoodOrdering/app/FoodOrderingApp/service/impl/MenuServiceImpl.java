@@ -74,6 +74,21 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
+	public ResponseEntity getMenuListByCategorie(String categorie) {
+		Iterable<Menu> menuDB = menuConnector.getMenuList(categorie);
+		List<HashMap<String, Object>> menuList = new ArrayList<HashMap<String, Object>>();
+		for ( Menu menuElement : menuDB ) {
+			System.out.println("menuElt ==> "+menuElement.getIdmenu());
+			HashMap<String, Object> menuMap = new HashMap<String, Object>();
+			menuMap.put("name", menuElement.getName());
+			menuMap.put("price", menuElement.getPrice());
+			menuMap.put( "categorie", menuElement.getCategorie());
+			menuList.add(menuMap);
+		}
+		return new ResponseEntity(menuList, HttpStatus.OK);
+	}
+
+	@Override
 	public ResponseEntity getAll() {
 		Iterable<Menu> menuDB = menuConnector.getAll();
 		List<HashMap<String, Object>> menuList = new ArrayList<HashMap<String, Object>>();
@@ -83,6 +98,7 @@ public class MenuServiceImpl implements MenuService {
 			HashMap<String, Object> menuMap = new HashMap<String, Object>();
 			menuMap.put("name", menuElement.getName());
 			menuMap.put("price", menuElement.getPrice());
+			menuMap.put( "categorie", menuElement.getCategorie());
 			menuList.add(menuMap);
 		}
 		return new ResponseEntity(menuList, HttpStatus.OK);

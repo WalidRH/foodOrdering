@@ -28,6 +28,12 @@ public class MenuConnectorImpl implements MenuConnector{
 
 	@Transactional
 	@Override
+	public Iterable<Menu> getMenuList(String categorie) {
+		return menuRep.findByCategorie(categorie);
+	}
+
+	@Transactional
+	@Override
 	public Menu saveMenu(Menu menu) {
 		return menuRep.save(menu);
 	}

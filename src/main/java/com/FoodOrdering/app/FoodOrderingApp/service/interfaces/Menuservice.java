@@ -13,7 +13,9 @@ public interface MenuService {
 	public ResponseEntity getMenu(int id);
 	
 	public ResponseEntity getMenu(String name);
-	
+
+	public ResponseEntity getMenuListByCategorie(String categorie);
+
 	public ResponseEntity getAll();
 	
 
