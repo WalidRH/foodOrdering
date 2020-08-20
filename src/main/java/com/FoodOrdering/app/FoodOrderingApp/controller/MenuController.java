@@ -37,7 +37,15 @@ public class MenuController {
 	public ResponseEntity findMenuByName(@RequestParam("name") String name) {
 		return menuSerive.getMenu(name);
 	}
-	
+
+
+	@RequestMapping(value = "/find",
+			params = { "categorie" },
+			method = RequestMethod.GET)
+	public ResponseEntity findMenuByCategorie(@RequestParam("categorie") String categorie) {
+		return menuSerive.getMenuListByCategorie(categorie);
+	}
+
 	
 	@RequestMapping(value = "/findAll",
 			method = RequestMethod.GET)

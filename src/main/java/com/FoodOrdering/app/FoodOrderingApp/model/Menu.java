@@ -26,6 +26,8 @@ public class Menu implements Serializable {
 
 	private String name;
 
+	private String categorie;
+
 	private double price;
 
 	//bi-directional many-to-one association to Order
@@ -33,6 +35,14 @@ public class Menu implements Serializable {
 	private List<Order> orders;
 
 	public Menu() {
+	}
+
+	public String getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
 	}
 
 	public int getIdmenu() {
