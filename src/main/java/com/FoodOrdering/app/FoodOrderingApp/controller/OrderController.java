@@ -80,10 +80,15 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/OrderedMenus",
-			params = { "popular" },
 			method = RequestMethod.GET)
-	public ResponseEntity getPrebookingOrder(@RequestParam("popular") boolean popular) {
-		return orderService.getOrderedItems(popular);
+	public ResponseEntity getOrderedMenus() {
+		return orderService.getOrderedItems(false);
+	}
+
+	@RequestMapping(value = "/OrderedMenus/popular",
+			method = RequestMethod.GET)
+	public ResponseEntity getPopularMenus() {
+		return orderService.getOrderedItems(true);
 	}
 
 }

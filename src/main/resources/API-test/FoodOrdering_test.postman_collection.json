@@ -302,6 +302,63 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find popular menus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/order/OrderedMenus/popular",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"OrderedMenus",
+								"popular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find ordered menus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/order/OrderedMenus",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"order",
+								"OrderedMenus"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
