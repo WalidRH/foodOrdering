@@ -64,6 +64,16 @@ public interface OrderService {
 	 */
 	
 	public ResponseEntity getPrebookingOrder( String reserveDate);
+
+	/**
+	 *
+	 * get the list of ordered menus by clients
+	 *
+	 * if the popularity = true then
+	 *		==> getting the most popular menus
+	 *
+	 */
+	public ResponseEntity getOrderedItems( boolean popularity);
 	
 	
 	

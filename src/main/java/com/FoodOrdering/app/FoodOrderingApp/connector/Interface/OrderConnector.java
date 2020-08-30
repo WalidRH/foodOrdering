@@ -30,4 +30,6 @@ public interface OrderConnector {
 	
 	public Iterable<Order> getByMenu(Menu menu);
 
+	public Iterable<Order> getOrderedMenus();
+
 }

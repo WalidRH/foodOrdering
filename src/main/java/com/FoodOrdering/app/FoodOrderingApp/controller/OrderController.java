@@ -78,4 +78,12 @@ public class OrderController {
 	public ResponseEntity getPrebookingOrder(@RequestParam("reserveDate") String reserveDate) {
 		return orderService.getPrebookingOrder(reserveDate);
 	}
+
+	@RequestMapping(value = "/OrderedMenus",
+			params = { "popular" },
+			method = RequestMethod.GET)
+	public ResponseEntity getPrebookingOrder(@RequestParam("popular") boolean popular) {
+		return orderService.getOrderedItems(popular);
+	}
+
 }

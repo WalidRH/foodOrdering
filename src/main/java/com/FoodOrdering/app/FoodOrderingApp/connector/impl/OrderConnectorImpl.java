@@ -72,8 +72,14 @@ public class OrderConnectorImpl implements OrderConnector {
 	public Iterable<Order> getByMenu(Menu menu) {
 		return orderRepo.findByMenu(menu);
 	}
-	
-	
+
+	@Transactional
+	@Override
+	public Iterable<Order> getOrderedMenus() {
+		return orderRepo.findOrderedMenus();
+	}
+
+
 	@Transactional
 	@Override
 	public Order insertOrder(Order order) {
