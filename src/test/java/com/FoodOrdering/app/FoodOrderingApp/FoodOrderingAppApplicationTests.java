@@ -3,7 +3,9 @@ package com.FoodOrdering.app.FoodOrderingApp;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.OrderConnector;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,9 @@ class FoodOrderingAppApplicationTests {
 	
 	@Autowired
 	OrderServiceImpl orderService;
+
+	@Autowired
+	OrderConnector orderCon;
 	
 	@Autowired
 	Client client;
@@ -89,6 +94,15 @@ class FoodOrderingAppApplicationTests {
 	void testGetOrder() {
 		System.out.println("START TEST - GET ORDER BY ID");
 		orderService.getOrder(3);
+	}
+
+	@Test
+	void testOrderedMenus(){
+		System.out.println("START TEST - LIST ORDERED MENUS");
+		Iterable<Order> orderList = orderCon.getOrderedMenus();
+		for ( Order orderElement: orderList ) {
+			System.out.println("MENU ID "+orderElement.getMenu().getIdmenu()+ " order From "+ orderElement.getClient().getFirstName() + "  "+ orderElement.getNumberOrders() + " times " );
+		}
 	}
 
 }

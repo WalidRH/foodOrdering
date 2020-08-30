@@ -12,6 +12,7 @@ import com.FoodOrdering.app.FoodOrderingApp.model.Order;
 import java.sql.Timestamp;
 
 public interface OrderRepository extends CrudRepository<Order, Integer>{
+
 	public Order findByIdOrder(int id);
 	
 	public Iterable<Order> findAll();
@@ -31,4 +32,7 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 	public Iterable<Order> findByClient(Client client);
 	
 	public Iterable<Order> findByMenu(Menu menu);
+
+	@Query("select new com.FoodOrdering.app.FoodOrderingApp.model.Order( o.client, o.menu, count(o) ) from Order o group by o.menu, o.client having count(o) > 3")
+	public Iterable<Order> findOrderedMenus();
 }

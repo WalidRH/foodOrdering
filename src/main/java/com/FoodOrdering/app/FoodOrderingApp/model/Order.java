@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="ordering")
 @Component
-public class Order implements Serializable {
+public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -40,6 +40,9 @@ public class Order implements Serializable {
 	@Column(name = "tracking_state")
 	private String trackingState;
 
+	@Transient
+	private long numberOrders;
+
 	//bi-directional many-to-one association to Client
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_client")
@@ -52,6 +55,12 @@ public class Order implements Serializable {
 	private Menu menu;
 
 	public Order() {
+	}
+
+	public Order( Client clientEntity, Menu menuEntity, long numberOrders ) {
+		this.client = clientEntity;
+		this.menu = menuEntity;
+		this.numberOrders = numberOrders;
 	}
 
 	public int getIdOrder() {
@@ -118,4 +127,7 @@ public class Order implements Serializable {
 		this.menu = menu;
 	}
 
+	public long getNumberOrders() {
+		return numberOrders;
+	}
 }

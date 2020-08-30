@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for macos10.15 (x86_64)
 --
--- Host: 192.168.1.20    Database: food_ordering_app
+-- Host: localhost    Database: food_ordering
 -- ------------------------------------------------------
--- Server version	5.7.31-0ubuntu0.16.04.1
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -51,8 +51,9 @@ DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
-  `idmenu` int(11) NOT NULL AUTO_INCREMENT,
+  `idmenu` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `categorie` varchar(45) DEFAULT NULL,
   `price` decimal(50,0) DEFAULT NULL,
   PRIMARY KEY (`idmenu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -64,7 +65,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'emince Poulet',36),(2,'lasagne',30),(3,'burger',25),(4,'chawara',36);
+INSERT INTO `menu` VALUES (1,'emince Poulet','plat',36),(2,'lasagne','patte',30),(3,'burger','sandwich',25),(4,'chawara','sandwich',36);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,13 +77,13 @@ DROP TABLE IF EXISTS `ordering`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordering` (
-  `id_order` int(11) NOT NULL AUTO_INCREMENT,
+  `id_order` int NOT NULL AUTO_INCREMENT,
   `id_client` varchar(50) DEFAULT NULL,
-  `id_menu` int(11) DEFAULT NULL,
+  `id_menu` int DEFAULT NULL,
   `quantity_order` double DEFAULT NULL,
   `tracking_state` varchar(45) DEFAULT NULL,
   `date_order` datetime(1) DEFAULT NULL,
-  `nb_person` int(11) DEFAULT NULL,
+  `nb_person` int DEFAULT NULL,
   `serve_date` datetime(1) DEFAULT NULL,
   PRIMARY KEY (`id_order`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
@@ -107,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-15 21:56:44
+-- Dump completed on 2020-08-30 17:48:18
