@@ -26,6 +26,7 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		if (menuConnector.getMenu(menu.getName()) == null) {
 			Menu menu_ = menuConnector.saveMenu(menu);
+			model.put("ref", menu_.getIdmenu());
 			model.put("name", menu_.getName());
 			model.put("price", menu_.getPrice());
 		} else
@@ -39,6 +40,7 @@ public class MenuServiceImpl implements MenuService {
 		if (menuConnector.getMenu(menu.getName()) != null) {
 			menu.setIdmenu(menuConnector.getMenu(menu.getName()).getIdmenu());
 			Menu menu_ = menuConnector.editMenu(menu);
+			model.put("ref", menu_.getIdmenu());
 			model.put("name", menu_.getName());
 			model.put("price", menu_.getPrice());
 		} else
@@ -51,7 +53,9 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(id);
 		if (menu != null) {
+		model.put("ref", menu.getIdmenu());
 		model.put("name", menu.getName());
+		model.put("categorie", menu.getCategorie());
 		model.put("price", menu.getPrice());
 		} else {
 			model.put("ERROR", "The menu deosn't existe");
@@ -65,6 +69,7 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(name);
 		if (menu != null) {
+			model.put("ref", menu.getIdmenu());
 			model.put("name", menu.getName());
 			model.put("price", menu.getPrice());
 		}else {
@@ -80,6 +85,7 @@ public class MenuServiceImpl implements MenuService {
 		for ( Menu menuElement : menuDB ) {
 			System.out.println("menuElt ==> "+menuElement.getIdmenu());
 			HashMap<String, Object> menuMap = new HashMap<String, Object>();
+			menuMap.put("ref", menuElement.getIdmenu());
 			menuMap.put("name", menuElement.getName());
 			menuMap.put("price", menuElement.getPrice());
 			menuMap.put( "categorie", menuElement.getCategorie());
@@ -96,6 +102,7 @@ public class MenuServiceImpl implements MenuService {
 		for (Menu menuElement : menuDB) {
 			System.out.println("menuElt ==> "+menuElement.getIdmenu());
 			HashMap<String, Object> menuMap = new HashMap<String, Object>();
+			menuMap.put("ref", menuElement.getIdmenu());
 			menuMap.put("name", menuElement.getName());
 			menuMap.put("price", menuElement.getPrice());
 			menuMap.put( "categorie", menuElement.getCategorie());
