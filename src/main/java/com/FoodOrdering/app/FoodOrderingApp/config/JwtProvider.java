@@ -24,7 +24,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-@PropertySource("classpath:application_remote.properties")
+@PropertySource("classpath:application.properties")
 
 /**
  * this class generate a JWT

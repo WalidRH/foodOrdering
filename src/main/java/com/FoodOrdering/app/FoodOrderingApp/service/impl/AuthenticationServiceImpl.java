@@ -38,7 +38,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	        System.out.println("TOKEN");
 	        Map<Object, Object> model = new HashMap<>();
 	        model.put("email", email);
-	        model.put("token", token);
+	        model.put("role", this.clientConnectorDB.getClient(email).getRole());
+			model.put("firstName", clientConnectorDB.getClient(email).getFirstName());
+			model.put("lastName", clientConnectorDB.getClient(email).getLastName());
+
+			model.put("token", token);
 	        return ok(model);
 		}
 		catch (AuthenticationException e) {
@@ -55,8 +59,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
     	Map<Object, Object> model = new HashMap<>();
-        if(clientConnectorDB.saveClient(client) != null) model.put("message", "User registered successfully");	
-        else model.put("ERROR", "User registered Failed");
+        if(clientConnectorDB.saveClient(client) != null){
+        	model.put("Registration", "SUCCESSFULLY");
+        	model.put("email", clientConnectorDB.getClient(client.getEmail()).getEmail());
+        	model.put("firstName", clientConnectorDB.getClient(client.getEmail()).getFirstName());
+        	model.put("lastName", clientConnectorDB.getClient(client.getEmail()).getLastName());
+		}
+        else{
+        	model.put("Registration", "ERROR");
+		}
         
         return ok(model);
 	}
