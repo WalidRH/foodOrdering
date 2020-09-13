@@ -1,5 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,18 +37,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 	        String token = jwtTokenProvider.createToken(email, this.clientConnectorDB.getClient(email).getRole());
 	        System.out.println("TOKEN");
-	        Map<Object, Object> model = new HashMap<>();
+			Map<Object, Object> model = new HashMap<>();
 	        model.put("email", email);
 	        model.put("role", this.clientConnectorDB.getClient(email).getRole());
 			model.put("firstName", clientConnectorDB.getClient(email).getFirstName());
 			model.put("lastName", clientConnectorDB.getClient(email).getLastName());
 
 			model.put("token", token);
-	        return ok(model);
+			return ok(model);
+
 		}
 		catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
+            throw new ElementNotFoundException("Invalid email/password supplied");
         }
+
 	}
 
 	@Override
