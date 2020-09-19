@@ -66,7 +66,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"quantity\": 3\n}",
+							"raw": "{\n    \"quantity\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +74,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{localBasedURL}}/order/makeOrder?email=RahouwWalid17@gmail.com&idMenu=1",
+							"raw": "{{localBasedURL}}/order/makeOrder?email=RahouwWalid17@gmail.com&idMenu=2",
 							"host": [
 								"{{localBasedURL}}"
 							],
@@ -89,7 +89,7 @@
 								},
 								{
 									"key": "idMenu",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -364,276 +364,329 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Authenticate",
-			"event": [
+			"name": "Menu",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "4d08217b-a191-42e9-ad9d-d09abd9f1aed",
-						"exec": [
-							"var headerValue = JSON.parse(responseBody);",
-							"postman.setEnvironmentVariable(\"authToken\", headerValue.token);"
-						],
-						"type": "text/javascript"
-					}
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b9246d9d-5d84-42f6-9d61-a878a57ad0ae",
+								"exec": [
+									"var headerValue = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"authToken\", headerValue.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/auth/login?email=rahouwalid17@gmail.com&password=12345",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "rahouwalid17@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "12345"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindMenuById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/menu/find?id=1",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindMenuByName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/menu/find?name=emince Poulet",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"find"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "emince Poulet"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddingMenu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"burger\",\n    \"price\": 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedURL}}/menu/add",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatingMenu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idmenu\": 2,\n    \"name\": \"lasagne\",\n    \"price\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedURL}}/menu/edit",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/menu/findAll",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"findAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindMenuByCategorie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/menu/find?categorie=sandwich",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"find"
+							],
+							"query": [
+								{
+									"key": "categorie",
+									"value": "sandwich"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{localBasedURL}}/auth/login?email=RahouwWalid17@gmail.com&password=Wal17@",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"auth",
-						"login"
-					],
-					"query": [
-						{
-							"key": "email",
-							"value": "RahouwWalid17@gmail.com"
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User-Auth",
+			"item": [
+				{
+					"name": "SignUP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"RahouwWalid17@gmail.com\",\n    \"firstName\": \"Walid\",\n    \"lastName\": \"RH\",\n    \"password\": \"Wal17@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "password",
-							"value": "Wal17@"
+						"url": {
+							"raw": "{{localBasedURL}}/auth/signup",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4d08217b-a191-42e9-ad9d-d09abd9f1aed",
+								"exec": [
+									"var headerValue = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"authToken\", headerValue.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/auth/login?email=rahouwalid17@gmail.com&password=12345",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "rahouwalid17@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "12345"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "SignUP",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"RahouwWalid17@gmail.com\",\n    \"firstName\": \"Walid\",\n    \"lastName\": \"RH\",\n    \"password\": \"Wal17@\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{localBasedURL}}/auth/signup",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"auth",
-						"signup"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FindMenuById",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{localBasedURL}}/menu/find?id=1",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"find"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FindMenuByName",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{localBasedURL}}/menu/find?name=emince Poulet",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"find"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "emince Poulet"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "AddingMenu",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"burger\",\n    \"price\": 25\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{localBasedURL}}/menu/add",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdatingMenu",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"idmenu\": 2,\n    \"name\": \"lasagne\",\n    \"price\": 50\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{localBasedURL}}/menu/edit",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"edit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FindALL",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{localBasedURL}}/menu/findAll",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"findAll"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "FindMenuByCategorie",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{authToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{localBasedURL}}/menu/find?categorie=sandwich",
-					"host": [
-						"{{localBasedURL}}"
-					],
-					"path": [
-						"menu",
-						"find"
-					],
-					"query": [
-						{
-							"key": "categorie",
-							"value": "sandwich"
-						}
-					]
-				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
