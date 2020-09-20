@@ -1,30 +1,37 @@
 package com.FoodOrdering.app.FoodOrderingApp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ErrorResponse {
-    public ErrorResponse(String message, List<String> details) {
-        super();
-        this.message = message;
-        this.details = details;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private LocalDateTime timestamp;
+    private int status;
+    private String error;
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    private String message;
-    private List<String> details;
-
-    public String getMessage() {
-        return message;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public int getStatus() {
+        return status;
     }
 
-    public List<String> getDetails() {
-        return details;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public void setDetails(List<String> details) {
-        this.details = details;
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

@@ -11,6 +11,7 @@
 	</parent>
 	<groupId>com.FoodOrdering.app</groupId>
 	<artifactId>FoodOrderingApp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>FoodOrderingApp</name>
 	<description>MVP project for Spring Boot</description>
@@ -90,7 +91,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-
 			</plugin>
 		</plugins>
 		<finalName>FoodOrderingApp</finalName>
