@@ -1,5 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.Handler;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     private String INCORRECT_REQUEST = "INCORRECT_REQUEST";
+    private String ALREADY_EXIST = "ALREADY_EXIST";
     @ExceptionHandler(ElementNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleUserNotFoundException
             (ElementNotFoundException ex, WebRequest request)
@@ -21,5 +23,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, details);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ElementExistException.class)
+    public final ResponseEntity<ErrorResponse> handleUserExistException
+            (ElementNotFoundException ex, WebRequest request)
+    {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse(ALREADY_EXIST, details);
+        return new ResponseEntity<>(error, HttpStatus.IM_USED);
     }
 }

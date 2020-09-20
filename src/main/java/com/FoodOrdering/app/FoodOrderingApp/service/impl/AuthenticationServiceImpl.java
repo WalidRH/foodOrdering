@@ -1,5 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,18 +59,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		Client userExists = clientConnectorDB.getClient(client.getEmail());
 		System.out.println("WAL :: SignUP "+ client.getEmail());
         if (userExists != null) {
-            throw new BadCredentialsException("User with username: " + client.getEmail() + " already exists");
+            throw new ElementExistException("User with username: " + client.getEmail() + " already exists");
         }
 
     	Map<Object, Object> model = new HashMap<>();
         if(clientConnectorDB.saveClient(client) != null){
-        	model.put("Registration", "SUCCESSFULLY");
-        	model.put("email", clientConnectorDB.getClient(client.getEmail()).getEmail());
-        	model.put("firstName", clientConnectorDB.getClient(client.getEmail()).getFirstName());
-        	model.put("lastName", clientConnectorDB.getClient(client.getEmail()).getLastName());
+        	model.put("Registration", "SUCCESS");
 		}
         else{
-        	model.put("Registration", "ERROR");
+        	model.put("Registration", "FAILED");
 		}
         
         return ok(model);
