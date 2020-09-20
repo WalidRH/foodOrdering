@@ -36,7 +36,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errors = new ErrorResponse();
         errors.setTimestamp(LocalDateTime.now());
         errors.setError(ex.getMessage());
-        errors.setStatus(HttpStatus.IM_USED.value());
-        return new ResponseEntity<>(errors, HttpStatus.IM_USED);
+        errors.setStatus(HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
