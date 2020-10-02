@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuthenticationEntryPoint unauthorizedEntryPoint() {
 		return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-				"Unauthorized");
+				"Invalid Token: PLEASE LOGIN");
 	}
 
 }

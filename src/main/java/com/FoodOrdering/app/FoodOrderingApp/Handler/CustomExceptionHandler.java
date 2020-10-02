@@ -11,17 +11,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     private String INCORRECT_REQUEST = "INCORRECT_REQUEST";
     private String ALREADY_EXIST = "ALREADY_EXIST";
+
     @ExceptionHandler(ElementNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleUserNotFoundException
-            (ElementNotFoundException ex, WebRequest request)
-    {
+    public final ResponseEntity<ErrorResponse> handleUserNotFoundException(ElementNotFoundException ex, WebRequest request) {
         ErrorResponse errors = new ErrorResponse();
         errors.setTimestamp(LocalDateTime.now());
         errors.setError(ex.getMessage());
@@ -30,13 +27,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ElementExistException.class)
-    public final ResponseEntity<ErrorResponse> handleUserExistException
-            (ElementExistException ex, WebRequest request)
-    {
+    public final ResponseEntity<ErrorResponse> handleUserExistException(ElementExistException ex, WebRequest request) {
         ErrorResponse errors = new ErrorResponse();
         errors.setTimestamp(LocalDateTime.now());
         errors.setError(ex.getMessage());
         errors.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
 }
