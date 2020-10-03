@@ -43,10 +43,7 @@ public class OrderServiceImpl implements OrderService {
             order.setClient(client);
             Menu menu = menuCon.getMenu(id);
             if (menu != null) {
-                order.setMenu(menu);
-                long now = System.currentTimeMillis();
-                Timestamp date = new Timestamp(now);
-                order.setDateOrder(date);
+                setOrderData(order, menu);
                 order = orderCon.insertOrder(order);
                 model = this.setModelOrder(order);
             } else {
@@ -130,6 +127,16 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity(this.getPopularity(orderList), HttpStatus.OK);
         }
         return new ResponseEntity(this.getOrderedMenuListMap(orderList), HttpStatus.OK);
+    }
+
+    private void setOrderData(Order order, Menu menu){
+        order.setMenu(menu);
+        long now = System.currentTimeMillis();
+        Timestamp date = new Timestamp(now);
+        order.setDateOrder(date);
+        if (order.getTrackingState() == null) {
+            order.setTrackingState("Submitted");
+        }
     }
 
     private List<HashMap<String, Object>> getOrderListMap(Iterable<Order> orderList) {
