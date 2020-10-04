@@ -2,6 +2,7 @@ package com.FoodOrdering.app.FoodOrderingApp.config;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -21,72 +22,84 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.CustomeUserDetailsService;
 
+import java.time.LocalDateTime;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	CustomeUserDetailsService userDetails;
+    @Autowired
+    CustomeUserDetailsService userDetails;
 
-	@Autowired
-	private JwtConfigure configurer;
+    @Autowired
+    private JwtConfigure configurer;
 
 
-	// Defining datasource for the user
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
+    // Defining datasource for the user
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
 
-		try {
-			auth.userDetailsService(userDetails).passwordEncoder(passwordEncoder());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+        try {
+            auth.userDetailsService(userDetails).passwordEncoder(passwordEncoder());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	// configure authorize requests
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    }
 
-		http.httpBasic().disable().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().authorizeRequests()
-				.antMatchers("/api/auth/login").permitAll()
-				.antMatchers("/api/auth/signup").permitAll()
-				.antMatchers("/api/order/OrderedMenus/popular").permitAll()
-				.antMatchers("/api/menu/add").hasAuthority("ROLE_ADMIN")
-				.antMatchers("/api/menu/edit").hasAuthority("ROLE_ADMIN")
-				.antMatchers("/api/menu/**").permitAll()
-				.antMatchers("/api/order/OrderedMenus").hasAuthority("ROLE_ADMIN")
-				.antMatchers("/api/order/**").authenticated()
-				.anyRequest().authenticated()
-				.and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
-				.apply(configurer);
-		http.cors();
+    // configure authorize requests
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-	}
+        http.httpBasic().disable().csrf().disable().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/auth/signup").permitAll()
+                .antMatchers("/api/order/OrderedMenus/popular").permitAll()
+                .antMatchers("/api/menu/add").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/menu/edit").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/menu/**").permitAll()
+                .antMatchers("/api/order/OrderedMenus").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/order/**").authenticated()
+                .anyRequest().authenticated()
+                .and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
+                .apply(configurer);
+        http.cors();
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-	}
+    }
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public AuthenticationEntryPoint unauthorizedEntryPoint() {
-		return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-				"Invalid Token: PLEASE LOGIN");
-	}
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
+    @Bean
+    public AuthenticationEntryPoint unauthorizedEntryPoint() {
+        return (request, response, authException) -> {
+            JSONObject obj = new JSONObject();
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            obj.put("timestamp", LocalDateTime.now());
+            obj.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+            obj.put("error", "Unauthorized");
+            obj.put("message", "Invalid Token: PLEASE LOGIN");
+            response.getWriter().write(obj.toString());
+        };
+    }
 }
+
+

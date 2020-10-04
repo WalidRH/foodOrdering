@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -129,5 +131,24 @@ public class Order implements Serializable{
 
 	public long getNumberOrders() {
 		return numberOrders;
+	}
+
+	public Map<String, Object> getMenuDataMap(){
+		Map<String, Object> menuData = new HashMap<>();
+		menuData.put("ref", this.menu.getIdmenu());
+		menuData.put("name", this.menu.getName());
+		menuData.put("categorie", this.menu.getCategorie());
+		menuData.put("price", this.menu.getPrice());
+		return menuData;
+	}
+
+	public Map<String, Object> getClientDataMap(){
+		Map<String, Object> clientData = new HashMap<>();
+		clientData.put("idclient",this.client.getIdclient());
+		clientData.put("email",this.client.getEmail());
+		clientData.put("firstName",this.client.getFirstName());
+		clientData.put("lastName",this.client.getLastName());
+		clientData.put("role",this.client.getRole());
+		return clientData;
 	}
 }

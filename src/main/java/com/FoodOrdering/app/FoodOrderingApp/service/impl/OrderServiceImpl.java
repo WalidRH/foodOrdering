@@ -160,14 +160,15 @@ public class OrderServiceImpl implements OrderService {
 
     private HashMap<String, Object> setModelOrder(Order order) {
         HashMap<String, Object> model = new HashMap<String, Object>();
-        model.put("Ref", order.getIdOrder());
-        model.put("IdMenu", order.getMenu().getIdmenu());
-        model.put("Quantity", order.getQuantity());
-        model.put("Tracking-Status", order.getTrackingState());
-        model.put("Order-Date", order.getDateOrder());
-        if (order.getServeDate() != null && order.getNbPerson() == 0) {
-            model.put("ref", order.getIdOrder());
-            model.put("ref", order.getIdOrder());
+        model.put("ref", order.getIdOrder());
+        model.put("quantity", order.getQuantity());
+        model.put("trackingStatus", order.getTrackingState());
+        model.put("orderDate", order.getDateOrder());
+        model.put("menu", order.getMenuDataMap());
+        model.put("client", order.getClientDataMap());
+        if (order.getServeDate() != null && order.getNbPerson() != 0) {
+            model.put("serveDate", order.getServeDate());
+            model.put("nbPreson", order.getNbPerson());
         }
         return model;
     }
