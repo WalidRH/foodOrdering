@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 import javax.swing.text.StyledEditorKit.ItalicAction;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.MenuConnector;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import org.apache.logging.log4j.util.SystemPropertiesPropertySource;
@@ -47,12 +48,10 @@ public class OrderServiceImpl implements OrderService {
                 order = orderCon.insertOrder(order);
                 model = this.setModelOrder(order);
             } else {
-                model = new HashMap<String, Object>();
-                model.put("ERROR", "New Menu");
+                throw new ElementNotFoundException("Menu does not exist");
             }
         } else {
-            model = new HashMap<String, Object>();
-            model.put("ERROR", "Cannot find the user");
+            throw new ElementNotFoundException("User does not exist");
         }
         return ok(model);
     }
