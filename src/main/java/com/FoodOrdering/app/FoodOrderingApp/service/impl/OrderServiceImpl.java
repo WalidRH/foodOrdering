@@ -59,6 +59,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity updateOrder(Order order) {
         Map<String, Object> model;
+        System.out.println("Is ORDER NULL"+ order == null);
+        System.out.println("Order ID" + order.getIdOrder());
         if (order != null && orderCon.getByIdOrder(order.getIdOrder()) != null) {
             order = orderCon.editOrder(order);
             model = this.setModelOrder(order);
@@ -160,6 +162,7 @@ public class OrderServiceImpl implements OrderService {
 
     private HashMap<String, Object> setModelOrder(Order order) {
         HashMap<String, Object> model = new HashMap<String, Object>();
+        System.out.println("ORDER ID "+ order.getIdOrder());
         model.put("ref", order.getIdOrder());
         model.put("quantity", order.getQuantity());
         model.put("trackingStatus", order.getTrackingState());
