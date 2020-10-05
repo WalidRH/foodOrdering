@@ -49,6 +49,10 @@ public class Order implements Serializable{
 	@Column(name = "tracking_state")
 	private String trackingState;
 
+	@JsonProperty("totalPrice")
+	@Column(name = "total_price")
+	private double totalPrice;
+
 	@Transient
 	private long numberOrders;
 
@@ -138,6 +142,14 @@ public class Order implements Serializable{
 
 	public long getNumberOrders() {
 		return numberOrders;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public Map<String, Object> getMenuDataMap(){

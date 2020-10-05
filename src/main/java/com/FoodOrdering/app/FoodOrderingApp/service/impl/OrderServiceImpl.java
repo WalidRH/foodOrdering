@@ -138,6 +138,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getTrackingState() == null) {
             order.setTrackingState("Submitted");
         }
+        order.setTotalPrice( menu.getPrice() + order.getQuantity() );
     }
 
     private List<HashMap<String, Object>> getOrderListMap(Iterable<Order> orderList) {
@@ -151,9 +152,8 @@ public class OrderServiceImpl implements OrderService {
     private List<HashMap<String, Object>> getOrderedMenuListMap(Iterable<Order> orderList) {
         List<HashMap<String, Object>> orderListMap = new ArrayList<HashMap<String, Object>>();
         for (Order orderItem : orderList) {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            model.put("client", orderItem.getClient().getEmail());
-            model.put("menu", orderItem.getMenu().getIdmenu());
+            HashMap<String, Object> model;
+            model = this.setModelOrder(orderItem);
             model.put("totalOrders", orderItem.getNumberOrders());
             orderListMap.add(model);
         }
@@ -167,6 +167,7 @@ public class OrderServiceImpl implements OrderService {
         model.put("quantity", order.getQuantity());
         model.put("trackingStatus", order.getTrackingState());
         model.put("orderDate", order.getDateOrder());
+        model.put("totalPrice", order.getTotalPrice());
         model.put("menu", order.getMenuDataMap());
         model.put("client", order.getClientDataMap());
         if (order.getServeDate() != null && order.getNbPerson() != 0) {
