@@ -59,6 +59,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity updateOrder(Order order) {
         Map<String, Object> model;
+        System.out.println("Is ORDER NULL"+ order == null);
+        System.out.println("Order ID" + order.getIdOrder());
         if (order != null && orderCon.getByIdOrder(order.getIdOrder()) != null) {
             order = orderCon.editOrder(order);
             model = this.setModelOrder(order);
@@ -136,6 +138,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getTrackingState() == null) {
             order.setTrackingState("Submitted");
         }
+        order.setTotalPrice( menu.getPrice() * order.getQuantity() );
     }
 
     private List<HashMap<String, Object>> getOrderListMap(Iterable<Order> orderList) {
@@ -149,9 +152,8 @@ public class OrderServiceImpl implements OrderService {
     private List<HashMap<String, Object>> getOrderedMenuListMap(Iterable<Order> orderList) {
         List<HashMap<String, Object>> orderListMap = new ArrayList<HashMap<String, Object>>();
         for (Order orderItem : orderList) {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            model.put("client", orderItem.getClient().getEmail());
-            model.put("menu", orderItem.getMenu().getIdmenu());
+            HashMap<String, Object> model;
+            model = this.setModelOrder(orderItem);
             model.put("totalOrders", orderItem.getNumberOrders());
             orderListMap.add(model);
         }
@@ -160,10 +162,12 @@ public class OrderServiceImpl implements OrderService {
 
     private HashMap<String, Object> setModelOrder(Order order) {
         HashMap<String, Object> model = new HashMap<String, Object>();
+        System.out.println("ORDER ID "+ order.getIdOrder());
         model.put("ref", order.getIdOrder());
         model.put("quantity", order.getQuantity());
         model.put("trackingStatus", order.getTrackingState());
         model.put("orderDate", order.getDateOrder());
+        model.put("totalPrice", order.getTotalPrice());
         model.put("menu", order.getMenuDataMap());
         model.put("client", order.getClientDataMap());
         if (order.getServeDate() != null && order.getNbPerson() != 0) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -22,25 +23,35 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_order")
+	@JsonProperty("ref")
 	private int idOrder;
 
+	@JsonProperty("orderDate")
 	@Column(name = "date_Order")
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Timestamp dateOrder;
 
+	@JsonProperty("serveDate")
 	@Column(name="serve_date")
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	private Timestamp serveDate;
 
+	@JsonProperty("nbPreson")
 	@Column(name="nb_person")
 	private int nbPerson;
 
 	@Column(name="quantity_order")
 	private double quantity;
 
+	@JsonProperty("trackingStatus")
 	@Column(name = "tracking_state")
 	private String trackingState;
+
+	@JsonProperty("totalPrice")
+	@Column(name = "total_price")
+	private double totalPrice;
 
 	@Transient
 	private long numberOrders;
@@ -131,6 +142,14 @@ public class Order implements Serializable{
 
 	public long getNumberOrders() {
 		return numberOrders;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public Map<String, Object> getMenuDataMap(){
