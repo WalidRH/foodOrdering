@@ -138,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getTrackingState() == null) {
             order.setTrackingState("Submitted");
         }
-        order.setTotalPrice( menu.getPrice() + order.getQuantity() );
+        order.setTotalPrice( menu.getPrice() * order.getQuantity() );
     }
 
     private List<HashMap<String, Object>> getOrderListMap(Iterable<Order> orderList) {
