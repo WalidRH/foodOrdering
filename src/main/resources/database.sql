@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: food_ordering
+-- Host: 192.168.1.20    Database: food_ordering_app
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	5.7.31-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES ('402881e973833e870173833e8a6c0000','Walid','Rahou','testWalid@gmail.com','$2a$10$g2zCQxBbVrE13FLCFdgkzuEfwU9BBMOcUrQsJwRfNcSqhf6GKL4oy','ADMIN'),('402881e97383c6fc017383c7a1b60000','hasnae','Rahou','testHasna@gmail.com','$2a$10$b6CBTGxDWh4N1zBUGnPWqOYesYCx6UN/QnfNmw9M.xbUxcNRD.UjC','ADMIN'),('402881e97383c6fc017383c9cb170001','hasnae','ACH','kbida@gmail.com','$2a$10$CKoTRLGJTN1wSYB.451vrOBqOtEBCz6lydmxzMsQZv5sV4arSAjJC',''),('402881e97383cba6017383cc59d20000','hasnae','ACH','HasnaACH@gmail.com','$2a$10$f0ky4A2BMz/ImqhDqqicC.rJvLqzS77c5nJ229kpWVKisaoyAyRji',''),('402881e973884b490173884b4e280000','test','ACH','Hasnatest@gmail.com','$2a$10$1JRqOVf0OF04ZMbjbFlfF.vGp/tvdA0QT5DyTDFKB.IIgrESJF46W',''),('402881e9738852b90173885497e30000','achab','ACH','Hasnaacheab@gmail.com','$2a$10$kKoWw8tjCgrVnjGEbfzbFOz.POTj9EAWbFd811FBmTq90UaGttTaa','USER'),('402881e9738852b90173885944530001','Walid','RH','RahouwWalid17@gmail.com','$2a$10$50gcdLC.bl87fd69sTGstuv41jT2bUmrislq496WYYbkVbZnH1mR2','USER');
+INSERT INTO `client` VALUES ('402881e973833e870173833e8a6c0000','Walid','Rahou','testWalid@gmail.com','$2a$10$g2zCQxBbVrE13FLCFdgkzuEfwU9BBMOcUrQsJwRfNcSqhf6GKL4oy','ADMIN'),('402881e97383c6fc017383c7a1b60000','hasnae','Rahou','testHasna@gmail.com','$2a$10$b6CBTGxDWh4N1zBUGnPWqOYesYCx6UN/QnfNmw9M.xbUxcNRD.UjC','ADMIN'),('402881e97383c6fc017383c9cb170001','hasnae','ACH','kbida@gmail.com','$2a$10$CKoTRLGJTN1wSYB.451vrOBqOtEBCz6lydmxzMsQZv5sV4arSAjJC',''),('402881e97383cba6017383cc59d20000','hasnae','ACH','HasnaACH@gmail.com','$2a$10$f0ky4A2BMz/ImqhDqqicC.rJvLqzS77c5nJ229kpWVKisaoyAyRji',''),('402881e973884b490173884b4e280000','test','ACH','Hasnatest@gmail.com','$2a$10$1JRqOVf0OF04ZMbjbFlfF.vGp/tvdA0QT5DyTDFKB.IIgrESJF46W',''),('402881e9738852b90173885497e30000','achab','ACH','Hasnaacheab@gmail.com','$2a$10$kKoWw8tjCgrVnjGEbfzbFOz.POTj9EAWbFd811FBmTq90UaGttTaa','USER'),('402881e9738852b90173885944530001','Walid','RH','RahouwWalid17@gmail.com','$2a$10$50gcdLC.bl87fd69sTGstuv41jT2bUmrislq496WYYbkVbZnH1mR2','ADMIN');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
-  `idmenu` int NOT NULL AUTO_INCREMENT,
+  `idmenu` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `categorie` varchar(45) DEFAULT NULL,
   `price` decimal(50,0) DEFAULT NULL,
@@ -77,16 +77,17 @@ DROP TABLE IF EXISTS `ordering`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordering` (
-  `id_order` int NOT NULL AUTO_INCREMENT,
+  `id_order` int(11) NOT NULL AUTO_INCREMENT,
   `id_client` varchar(50) DEFAULT NULL,
-  `id_menu` int DEFAULT NULL,
+  `id_menu` int(11) DEFAULT NULL,
   `quantity_order` double DEFAULT NULL,
   `tracking_state` varchar(45) DEFAULT NULL,
   `date_order` datetime(1) DEFAULT NULL,
-  `nb_person` int DEFAULT NULL,
+  `nb_person` int(11) DEFAULT NULL,
   `serve_date` datetime(1) DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
   PRIMARY KEY (`id_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `ordering` (
 
 LOCK TABLES `ordering` WRITE;
 /*!40000 ALTER TABLE `ordering` DISABLE KEYS */;
-INSERT INTO `ordering` VALUES (3,'402881e973833e870173833e8a6c0000',2,3,'Onprepare','2020-08-01 18:46:41.5',0,NULL),(4,'402881e973833e870173833e8a6c0000',2,3,'Onprepare','2020-08-09 17:51:38.4',0,NULL),(5,'402881e973833e870173833e8a6c0000',3,3,'OnServed','2020-09-19 18:52:51.0',0,NULL),(7,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 18:52:51.0',0,NULL),(8,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 19:50:33.1',2,'2020-08-09 21:52:51.0'),(9,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 20:01:27.4',2,'2020-08-09 21:52:51.0'),(10,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 00:00:00.0',0,NULL),(11,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 18:39:52.5',0,NULL),(12,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 18:59:17.8',0,NULL);
+INSERT INTO `ordering` VALUES (3,'402881e973833e870173833e8a6c0000',2,3,'Onprepare','2020-08-01 18:46:41.5',0,NULL,0),(4,'402881e973833e870173833e8a6c0000',2,3,'Onprepare','2020-08-09 17:51:38.4',0,NULL,0),(5,'402881e973833e870173833e8a6c0000',3,3,'OnServed','2020-09-19 18:52:51.0',0,NULL,0),(7,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 18:52:51.0',0,NULL,108),(8,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 19:50:33.1',2,'2020-08-09 21:52:51.0',0),(9,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-09 20:01:27.4',2,'2020-08-09 21:52:51.0',0),(10,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 00:00:00.0',0,NULL,0),(11,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 18:39:52.5',0,NULL,0),(12,'402881e9738852b90173885944530001',1,3,NULL,'2020-08-15 18:59:17.8',0,NULL,0),(13,'402881e9738852b90173885944530001',4,1,'Submitted','2020-10-10 02:19:30.7',0,NULL,36),(14,'402881e9738852b90173885944530001',2,1,'Submitted','2020-10-10 02:20:17.0',0,NULL,30);
 /*!40000 ALTER TABLE `ordering` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -108,4 +109,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-30 17:48:18
+-- Dump completed on 2020-10-10  3:42:54

@@ -133,6 +133,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity deleteOrderItem(int idOrder) {
         Map<String, Object> model = new HashMap<>();
+        if ( this.orderCon.getByIdOrder(idOrder) == null ){
+            throw new ElementNotFoundException("Order ID NOT FOUND");
+        }
         if ( this.orderCon.deleteOrder(idOrder) ){
             model.put("message","Order DELETED");
         } else {
