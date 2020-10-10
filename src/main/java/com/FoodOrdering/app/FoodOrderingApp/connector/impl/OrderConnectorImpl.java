@@ -102,6 +102,7 @@ public class OrderConnectorImpl implements OrderConnector {
 		orderEntity.setNbPerson(order.getNbPerson());
 		orderEntity.setQuantity(order.getQuantity());
 		orderEntity.setTrackingState(order.getTrackingState());
+		orderEntity.setTotalPrice(order.getTotalPrice());
 		return orderRepo.save(orderEntity);
 	}
 }
