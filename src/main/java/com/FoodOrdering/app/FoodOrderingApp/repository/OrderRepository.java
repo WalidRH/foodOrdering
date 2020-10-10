@@ -35,4 +35,6 @@ public interface OrderRepository extends CrudRepository<Order, Integer>{
 
 	@Query("select new com.FoodOrdering.app.FoodOrderingApp.model.Order( o.client, o.menu, count(o) ) from Order o group by o.menu, o.client having count(o) > 3")
 	public Iterable<Order> findOrderedMenus();
+
+	public long deleteByIdOrder(int idOrder);
 }

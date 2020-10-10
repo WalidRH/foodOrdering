@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 import javax.swing.text.StyledEditorKit.ItalicAction;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.MenuConnector;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
@@ -65,8 +66,7 @@ public class OrderServiceImpl implements OrderService {
             order = orderCon.editOrder(order);
             model = this.setModelOrder(order);
         } else {
-            model = new HashMap<String, Object>();
-            model.put("ERROR", "Can't update order");
+            throw new ActionErrorException("Can't Update Order");
         }
 
         return ok(model);
@@ -128,6 +128,17 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity(this.getPopularity(orderList), HttpStatus.OK);
         }
         return new ResponseEntity(this.getOrderedMenuListMap(orderList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity deleteOrderItem(int idOrder) {
+        Map<String, Object> model = new HashMap<>();
+        if ( this.orderCon.deleteOrder(idOrder) ){
+            model.put("message","Order DELETED");
+        } else {
+            throw new ActionErrorException("Can't Delete order");
+        }
+        return ok(model);
     }
 
     private void setOrderData(Order order, Menu menu){

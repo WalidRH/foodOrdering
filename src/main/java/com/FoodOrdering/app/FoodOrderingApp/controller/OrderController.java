@@ -91,4 +91,11 @@ public class OrderController {
 		return orderService.getOrderedItems(true);
 	}
 
+	@RequestMapping( value="/DeleteOrder",
+			params = { "id" },
+			method = RequestMethod.DELETE)
+	public ResponseEntity deleteOrder(@RequestParam("id") int idOrder){
+		return orderService.deleteOrderItem(idOrder);
+	}
+
 }
