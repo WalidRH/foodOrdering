@@ -1,5 +1,6 @@
 package com.FoodOrdering.app.FoodOrderingApp.Handler;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.model.ErrorResponse;
@@ -33,6 +34,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         errors.setError(ex.getMessage());
         errors.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ActionErrorException.class)
+    public final ResponseEntity<ErrorResponse> handleActionErrorException(ActionErrorException ex, WebRequest request) {
+        ErrorResponse error = new ErrorResponse();
+        error.setTimestamp(LocalDateTime.now());
+        error.setError(ex.getMessage());
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

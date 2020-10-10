@@ -32,4 +32,6 @@ public interface OrderConnector {
 
 	public Iterable<Order> getOrderedMenus();
 
+	public boolean deleteOrder(int idOrder);
+
 }

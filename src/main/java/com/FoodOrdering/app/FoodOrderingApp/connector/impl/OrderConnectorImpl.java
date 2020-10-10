@@ -79,6 +79,12 @@ public class OrderConnectorImpl implements OrderConnector {
 		return orderRepo.findOrderedMenus();
 	}
 
+	@Transactional
+	@Override
+	public boolean deleteOrder(int idOrder) {
+		return ( this.orderRepo.deleteByIdOrder(idOrder) == 1 )? true : false;
+	}
+
 
 	@Transactional
 	@Override

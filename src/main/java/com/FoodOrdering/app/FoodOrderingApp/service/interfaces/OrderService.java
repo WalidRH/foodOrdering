@@ -74,8 +74,13 @@ public interface OrderService {
 	 *
 	 */
 	public ResponseEntity getOrderedItems( boolean popularity);
-	
-	
-	
+
+	/**
+	 *
+	 * delete order item
+	 *
+	 */
+
+	public ResponseEntity deleteOrderItem( int idOrder );
 	
 }
