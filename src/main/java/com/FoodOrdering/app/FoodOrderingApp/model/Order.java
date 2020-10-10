@@ -62,7 +62,7 @@ public class Order implements Serializable{
 	private Client client;
 
 	//bi-directional many-to-one association to Menu
-	@ManyToOne(cascade = {CascadeType.ALL},
+	@ManyToOne(cascade = CascadeType.PERSIST,
 			fetch = FetchType.EAGER)
 	@JoinColumn(name="id_menu")
 	private Menu menu;
