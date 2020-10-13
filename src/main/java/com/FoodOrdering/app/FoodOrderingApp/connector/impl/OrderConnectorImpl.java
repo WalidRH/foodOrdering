@@ -2,6 +2,7 @@ package com.FoodOrdering.app.FoodOrderingApp.connector.impl;
 
 import java.sql.Timestamp;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,14 +96,18 @@ public class OrderConnectorImpl implements OrderConnector {
 	@Transactional
 	@Override
 	public Order editOrder(Order order) {
-		Order orderEntity = this.getByIdOrder(order.getIdOrder());
-		orderEntity.setDateOrder(order.getDateOrder());
-		orderEntity.setServeDate(order.getServeDate());
-		orderEntity.setMenu(order.getMenu());
-		orderEntity.setNbPerson(order.getNbPerson());
-		orderEntity.setQuantity(order.getQuantity());
-		orderEntity.setTrackingState(order.getTrackingState());
-		orderEntity.setTotalPrice(order.getTotalPrice());
-		return orderRepo.save(orderEntity);
+		try{
+			Order orderEntity = this.getByIdOrder(order.getIdOrder());
+			orderEntity.setDateOrder(order.getDateOrder());
+			orderEntity.setServeDate(order.getServeDate());
+			orderEntity.setMenu(order.getMenu());
+			orderEntity.setNbPerson(order.getNbPerson());
+			orderEntity.setQuantity(order.getQuantity());
+			orderEntity.setTrackingState(order.getTrackingState());
+			orderEntity.setTotalPrice(order.getMenu().getPrice() * order.getQuantity());
+			return orderRepo.save(orderEntity);
+		} catch (RuntimeException e){
+			throw new ActionErrorException("Can't Update Order");
+		}
 	}
 }
