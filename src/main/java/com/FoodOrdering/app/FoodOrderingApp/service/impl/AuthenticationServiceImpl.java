@@ -43,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	        model.put("role", this.clientConnectorDB.getClient(email).getRole());
 			model.put("firstName", clientConnectorDB.getClient(email).getFirstName());
 			model.put("lastName", clientConnectorDB.getClient(email).getLastName());
-
+			model.put("number", clientConnectorDB.getClient(email).getPhone());
 			model.put("token", token);
 			return ok(model);
 
