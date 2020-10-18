@@ -48,6 +48,7 @@ public class AuthController {
     public ResponseEntity register(@RequestBody Client client) {
 		System.out.println("----> email"+ client.getEmail());
 		System.out.println("----> password"+ client.getPassword());
+		System.out.println("----> password"+ client.getPhone());
     	return authService.signUp(client);
     }
 

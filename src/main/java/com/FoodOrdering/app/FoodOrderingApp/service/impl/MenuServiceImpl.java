@@ -26,9 +26,7 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		if (menuConnector.getMenu(menu.getName()) == null) {
 			Menu menu_ = menuConnector.saveMenu(menu);
-			model.put("ref", menu_.getIdmenu());
-			model.put("name", menu_.getName());
-			model.put("price", menu_.getPrice());
+			model = setModel(menu_);
 		} else
 			model.put("ERROR", "Can't add Menu");
 		return ok(model);
@@ -40,9 +38,7 @@ public class MenuServiceImpl implements MenuService {
 		if (menuConnector.getMenu(menu.getName()) != null) {
 			menu.setIdmenu(menuConnector.getMenu(menu.getName()).getIdmenu());
 			Menu menu_ = menuConnector.editMenu(menu);
-			model.put("ref", menu_.getIdmenu());
-			model.put("name", menu_.getName());
-			model.put("price", menu_.getPrice());
+			model = setModel(menu_);
 		} else
 			model.put("ERROR", "Can't Update Menu");
 		return ok(model);
@@ -53,10 +49,7 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(id);
 		if (menu != null) {
-		model.put("ref", menu.getIdmenu());
-		model.put("name", menu.getName());
-		model.put("categorie", menu.getCategorie());
-		model.put("price", menu.getPrice());
+			model = setModel(menu);
 		} else {
 			model.put("ERROR", "The menu deosn't existe");
 		}
@@ -69,9 +62,7 @@ public class MenuServiceImpl implements MenuService {
 		Map<String, Object> model = new HashMap<>();
 		Menu menu = menuConnector.getMenu(name);
 		if (menu != null) {
-			model.put("ref", menu.getIdmenu());
-			model.put("name", menu.getName());
-			model.put("price", menu.getPrice());
+			model = setModel(menu);
 		}else {
 			model.put("ERROR", "The menu deosn't existe");
 		}
@@ -84,12 +75,8 @@ public class MenuServiceImpl implements MenuService {
 		List<HashMap<String, Object>> menuList = new ArrayList<HashMap<String, Object>>();
 		for ( Menu menuElement : menuDB ) {
 			System.out.println("menuElt ==> "+menuElement.getIdmenu());
-			HashMap<String, Object> menuMap = new HashMap<String, Object>();
-			menuMap.put("ref", menuElement.getIdmenu());
-			menuMap.put("name", menuElement.getName());
-			menuMap.put("price", menuElement.getPrice());
-			menuMap.put( "categorie", menuElement.getCategorie());
-			menuList.add(menuMap);
+			Map<String, Object> menuMap = setModel(menuElement);
+			menuList.add((HashMap<String, Object>) menuMap);
 		}
 		return new ResponseEntity(menuList, HttpStatus.OK);
 	}
@@ -101,14 +88,20 @@ public class MenuServiceImpl implements MenuService {
 
 		for (Menu menuElement : menuDB) {
 			System.out.println("menuElt ==> "+menuElement.getIdmenu());
-			HashMap<String, Object> menuMap = new HashMap<String, Object>();
-			menuMap.put("ref", menuElement.getIdmenu());
-			menuMap.put("name", menuElement.getName());
-			menuMap.put("price", menuElement.getPrice());
-			menuMap.put( "categorie", menuElement.getCategorie());
-			menuList.add(menuMap);
+			Map<String, Object> menuMap = setModel(menuElement);
+			menuList.add((HashMap<String, Object>) menuMap);
 		}
 		return new ResponseEntity(menuList, HttpStatus.OK);
+	}
+
+	private Map<String, Object> setModel(Menu menu){
+		Map<String, Object> menuMap = new HashMap<>();
+		menuMap.put("ref", menu.getIdmenu());
+		menuMap.put("name", menu.getName());
+		menuMap.put("price", menu.getPrice());
+		menuMap.put("image", menu.getImage());
+		menuMap.put( "categorie", menu.getCategorie());
+		return menuMap;
 	}
 
 }
