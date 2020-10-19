@@ -86,6 +86,7 @@ public class Order implements Serializable{
 		menuData.put("name", this.menu.getName());
 		menuData.put("categorie", this.menu.getCategorie());
 		menuData.put("price", this.menu.getPrice());
+		menuData.put("image", this.menu.getImage());
 		return menuData;
 	}
 
@@ -96,6 +97,7 @@ public class Order implements Serializable{
 		clientData.put("firstName",this.client.getFirstName());
 		clientData.put("lastName",this.client.getLastName());
 		clientData.put("role",this.client.getRole());
+		clientData.put("phone",this.client.getPhone());
 		return clientData;
 	}
 }
