@@ -90,14 +90,14 @@ public class Order implements Serializable{
 		return menuData;
 	}
 
-	public Map<String, Object> getClientDataMap(){
+	public Map<String, Object> getClientDataMap() {
 		Map<String, Object> clientData = new HashMap<>();
-		clientData.put("idclient",this.client.getIdclient());
-		clientData.put("email",this.client.getEmail());
-		clientData.put("firstName",this.client.getFirstName());
-		clientData.put("lastName",this.client.getLastName());
-		clientData.put("role",this.client.getRole());
-		clientData.put("phone",this.client.getPhone());
+		clientData.put("idclient", this.client.getIdclient());
+		clientData.put("email", this.client.getEmail());
+		clientData.put("firstName", this.client.getFirstName());
+		clientData.put("lastName", this.client.getLastName());
+		clientData.put("role", this.client.getRole());
+		clientData.put("phone", this.client.getPhone());
 		return clientData;
 	}
 }

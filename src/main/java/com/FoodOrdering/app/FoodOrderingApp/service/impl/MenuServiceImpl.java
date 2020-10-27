@@ -1,10 +1,14 @@
 package com.FoodOrdering.app.FoodOrderingApp.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
+import com.FoodOrdering.app.FoodOrderingApp.service.enums.ImageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,9 @@ import static org.springframework.http.ResponseEntity.ok;
 import com.FoodOrdering.app.FoodOrderingApp.connector.impl.MenuConnectorImpl;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.interfaces.MenuService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
 import java.util.List;
 
 @Service
@@ -24,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public ResponseEntity addMenu(Menu menu) {
 		Map<String, Object> model = new HashMap<>();
-		if (menuConnector.getMenu(menu.getName()) == null) {
+		if (menuConnector.getMenu(menu.getName()) == null ) {
 			Menu menu_ = menuConnector.saveMenu(menu);
 			model = setModel(menu_);
 		} else
@@ -102,6 +109,50 @@ public class MenuServiceImpl implements MenuService {
 		menuMap.put("image", menu.getImage());
 		menuMap.put( "categorie", menu.getCategorie());
 		return menuMap;
+	}
+
+	@Override
+	public ResponseEntity saveImage(MultipartFile imageFile){
+		try {
+			setImageFile(imageFile.getBytes(), imageFile.getContentType(), imageFile.getOriginalFilename());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private boolean setImageFile(byte[] data , String imageFormat, String imageName){
+		ByteArrayInputStream bis = new ByteArrayInputStream(data);
+		BufferedImage bImage2 = null;
+		try {
+			String imgFormat = setImageTypeFormat(imageFormat);
+			if ( imgFormat != null){
+				bImage2 = ImageIO.read(bis);
+				ImageIO.write(bImage2, imgFormat, new File("../../FrontEnd/FoodOrderingUI/src/assets/images/categories/"+imageName) );
+				return true;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private String setImageTypeFormat(String imageFormat) {
+		switch (imageFormat){
+			case "image/gif":
+				return ImageFormat.GIF.toString();
+			case "image/png":
+				return ImageFormat.PNG.toString();
+			case "image/jpg":
+				return ImageFormat.JPG.toString();
+			case "image/jpeg":
+				return ImageFormat.JPEG.toString();
+			case "image/pjpeg":
+				return ImageFormat.PJPEG.toString();
+			default:
+				return null;
+		}
 	}
 
 }

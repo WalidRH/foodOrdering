@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -52,7 +55,12 @@ public class MenuController {
 	public ResponseEntity findAll() {
 		return menuSerive.getAll();
 	}
-	
+
+	@PostMapping("/upload")
+	public ResponseEntity uploadImage(@RequestParam("imageFile") MultipartFile imageFile){
+		return menuSerive.saveImage(imageFile);
+	}
+
 	@PostMapping(value="/add",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity addMenu(@RequestBody Menu menu) {
