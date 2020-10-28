@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 public interface MenuService {
 	
 	public ResponseEntity addMenu(Menu menu);
@@ -21,5 +19,5 @@ public interface MenuService {
 
 	public ResponseEntity getAll();
 
-	public ResponseEntity saveImage(MultipartFile imageFile);
+	public ResponseEntity saveImage(String category, MultipartFile imageFile);
 }

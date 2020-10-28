@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.service.enums.ImageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +38,7 @@ public class MenuServiceImpl implements MenuService {
 			Menu menu_ = menuConnector.saveMenu(menu);
 			model = setModel(menu_);
 		} else
-			model.put("ERROR", "Can't add Menu");
+			throw new ElementExistException("Meal already exist");
 		return ok(model);
 	}
 
@@ -47,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
 			Menu menu_ = menuConnector.editMenu(menu);
 			model = setModel(menu_);
 		} else
-			model.put("ERROR", "Can't Update Menu");
+			throw new ElementNotFoundException("Meal deosn't exist");
 		return ok(model);
 	}
 
@@ -58,7 +61,7 @@ public class MenuServiceImpl implements MenuService {
 		if (menu != null) {
 			model = setModel(menu);
 		} else {
-			model.put("ERROR", "The menu deosn't existe");
+			throw new ElementNotFoundException("Meal deosn't exist");
 		}
 		return ok(model);
 
@@ -71,7 +74,7 @@ public class MenuServiceImpl implements MenuService {
 		if (menu != null) {
 			model = setModel(menu);
 		}else {
-			model.put("ERROR", "The menu deosn't existe");
+			throw new ElementNotFoundException("Meal deosn't exist");
 		}
 		return ok(model);
 	}
@@ -112,9 +115,9 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public ResponseEntity saveImage(MultipartFile imageFile){
+	public ResponseEntity saveImage(String category, MultipartFile imageFile){
 		try {
-			setImageFile(imageFile.getBytes(), imageFile.getContentType(), imageFile.getOriginalFilename());
+			setImageFile(imageFile.getBytes(), imageFile.getContentType(), imageFile.getOriginalFilename(), category);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -122,18 +125,19 @@ public class MenuServiceImpl implements MenuService {
 		return null;
 	}
 
-	private boolean setImageFile(byte[] data , String imageFormat, String imageName){
+	private boolean setImageFile(byte[] data , String imageFormat, String imageName, String category){
 		ByteArrayInputStream bis = new ByteArrayInputStream(data);
 		BufferedImage bImage2 = null;
 		try {
 			String imgFormat = setImageTypeFormat(imageFormat);
 			if ( imgFormat != null){
 				bImage2 = ImageIO.read(bis);
-				ImageIO.write(bImage2, imgFormat, new File("../../FrontEnd/FoodOrderingUI/src/assets/images/categories/"+imageName) );
+				ImageIO.write(bImage2, imgFormat, new File("../../FrontEnd/FoodOrderingUI/src/assets/images/categories/"+category+"/"+imageName) );
 				return true;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new ActionErrorException("Can't save image");
 		}
 		return false;
 	}
