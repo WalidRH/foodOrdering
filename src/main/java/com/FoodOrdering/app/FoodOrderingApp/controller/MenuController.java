@@ -14,59 +14,68 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/menu")
 public class MenuController {
 
-	@Autowired
-	MenuServiceImpl menuSerive;
-	
-	@RequestMapping(value = "/find",
-			params = { "id" },
-			method = RequestMethod.GET)
-	public ResponseEntity findMenuById(@RequestParam("id") int id) {
-		return menuSerive.getMenu(id);
-	}
-	
-	
-	@RequestMapping(value = "/find",
-			params = { "name" },
-			method = RequestMethod.GET)
-	public ResponseEntity findMenuByName(@RequestParam("name") String name) {
-		return menuSerive.getMenu(name);
-	}
+    @Autowired
+    MenuServiceImpl menuSerive;
+
+    @RequestMapping(value = "/find",
+            params = {"id"},
+            method = RequestMethod.GET)
+    public ResponseEntity findMenuById(@RequestParam("id") int id) {
+        return menuSerive.getMenu(id);
+    }
 
 
-	@RequestMapping(value = "/find",
-			params = { "categorie" },
-			method = RequestMethod.GET)
-	public ResponseEntity findMenuByCategorie(@RequestParam("categorie") String categorie) {
-		return menuSerive.getMenuListByCategorie(categorie);
-	}
+    @RequestMapping(value = "/find",
+            params = {"name"},
+            method = RequestMethod.GET)
+    public ResponseEntity findMenuByName(@RequestParam("name") String name) {
+        return menuSerive.getMenu(name);
+    }
 
-	
-	@RequestMapping(value = "/findAll",
-			method = RequestMethod.GET)
-	public ResponseEntity findAll() {
-		return menuSerive.getAll();
-	}
-	
-	@PostMapping(value="/add",
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity addMenu(@RequestBody Menu menu) {
-		return menuSerive.addMenu(menu);
-	}
-	
-	
-	@PutMapping( value="/edit",
-			consumes = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity editMenu( @RequestBody Menu menu ) {
-		return menuSerive.updateMenu(menu);
-	}
-	
-	
-	
-	
+
+    @RequestMapping(value = "/find",
+            params = {"categorie"},
+            method = RequestMethod.GET)
+    public ResponseEntity findMenuByCategorie(@RequestParam("categorie") String categorie) {
+        return menuSerive.getMenuListByCategorie(categorie);
+    }
+
+
+    @RequestMapping(value = "/findAll",
+            method = RequestMethod.GET)
+    public ResponseEntity findAll() {
+        return menuSerive.getAll();
+    }
+
+    @PostMapping(
+            value = "/upload",
+            params = {"category"}
+    )
+    public ResponseEntity uploadImage(@RequestParam("category")String category, @RequestParam("imageFile") MultipartFile imageFile) {
+        return menuSerive.saveImage(category, imageFile);
+    }
+
+    @PostMapping(value = "/add",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addMenu(@RequestBody Menu menu) {
+        return menuSerive.addMenu(menu);
+    }
+
+
+    @PutMapping(value = "/edit",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editMenu(@RequestBody Menu menu) {
+        return menuSerive.updateMenu(menu);
+    }
+
+
 }

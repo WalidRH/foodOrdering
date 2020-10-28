@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.service.interfaces;
 import org.springframework.http.ResponseEntity;
 
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MenuService {
 	
@@ -17,6 +18,6 @@ public interface MenuService {
 	public ResponseEntity getMenuListByCategorie(String categorie);
 
 	public ResponseEntity getAll();
-	
 
+	public ResponseEntity saveImage(String category, MultipartFile imageFile);
 }

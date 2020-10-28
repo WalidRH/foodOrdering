@@ -1,9 +1,8 @@
 package com.FoodOrdering.app.FoodOrderingApp;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import com.FoodOrdering.app.FoodOrderingApp.connector.Interface.OrderConnector;
 import org.junit.jupiter.api.Test;
@@ -65,7 +64,7 @@ class FoodOrderingAppApplicationTests {
 	}
 	
 	@Test
-	void newMenu() {
+	void newMenu() throws IOException {
 		System.out.println("START TEST - ADDING MENU");
 		menu.setName("emince Poulet");
 		menu.setPrice(36);

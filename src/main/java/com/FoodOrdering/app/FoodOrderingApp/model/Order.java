@@ -86,16 +86,18 @@ public class Order implements Serializable{
 		menuData.put("name", this.menu.getName());
 		menuData.put("categorie", this.menu.getCategorie());
 		menuData.put("price", this.menu.getPrice());
+		menuData.put("image", this.menu.getImage());
 		return menuData;
 	}
 
-	public Map<String, Object> getClientDataMap(){
+	public Map<String, Object> getClientDataMap() {
 		Map<String, Object> clientData = new HashMap<>();
-		clientData.put("idclient",this.client.getIdclient());
-		clientData.put("email",this.client.getEmail());
-		clientData.put("firstName",this.client.getFirstName());
-		clientData.put("lastName",this.client.getLastName());
-		clientData.put("role",this.client.getRole());
+		clientData.put("idclient", this.client.getIdclient());
+		clientData.put("email", this.client.getEmail());
+		clientData.put("firstName", this.client.getFirstName());
+		clientData.put("lastName", this.client.getLastName());
+		clientData.put("role", this.client.getRole());
+		clientData.put("phone", this.client.getPhone());
 		return clientData;
 	}
 }

@@ -3,6 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.Handler;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.MediaNotSupportedException;
 import com.FoodOrdering.app.FoodOrderingApp.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,4 +46,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(MediaNotSupportedException.class)
+    public final ResponseEntity<ErrorResponse> handleMediaNotSupportedException(MediaNotSupportedException ex, WebRequest request){
+        ErrorResponse error = new ErrorResponse();
+        error.setTimestamp(LocalDateTime.now());
+        error.setError(ex.getMessage());
+        error.setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
+        return new ResponseEntity<>(error, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
 }
