@@ -11,6 +11,7 @@ import java.util.Map;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ActionErrorException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
+import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.MediaNotSupportedException;
 import com.FoodOrdering.app.FoodOrderingApp.service.enums.ImageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -134,12 +135,13 @@ public class MenuServiceImpl implements MenuService {
 				bImage2 = ImageIO.read(bis);
 				ImageIO.write(bImage2, imgFormat, new File("../../FrontEnd/FoodOrderingUI/src/assets/images/categories/"+category+"/"+imageName) );
 				return true;
+			}else{
+				throw new MediaNotSupportedException("Unsupported Media Type");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new ActionErrorException("Can't save image");
 		}
-		return false;
 	}
 
 	private String setImageTypeFormat(String imageFormat) {
