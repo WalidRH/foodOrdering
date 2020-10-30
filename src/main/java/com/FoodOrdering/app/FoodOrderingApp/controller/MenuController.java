@@ -53,7 +53,7 @@ public class MenuController {
             value="/getImage",
             params = {"imageId"},
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE+";charset=UTF-8"
+            produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE}
     )
     public @ResponseBody byte[] getImage(@RequestParam("imageId") int id){
         return menuSerive.getimage(id);
