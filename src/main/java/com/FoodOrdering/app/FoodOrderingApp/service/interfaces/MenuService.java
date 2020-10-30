@@ -20,4 +20,6 @@ public interface MenuService {
 	public ResponseEntity getAll();
 
 	public ResponseEntity saveImage(String category, MultipartFile imageFile);
+
+	public byte[] getimage(int imageId);
 }

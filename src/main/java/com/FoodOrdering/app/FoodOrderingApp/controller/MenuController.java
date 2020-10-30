@@ -3,14 +3,7 @@ package com.FoodOrdering.app.FoodOrderingApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.FoodOrdering.app.FoodOrderingApp.model.Menu;
 import com.FoodOrdering.app.FoodOrderingApp.service.impl.MenuServiceImpl;
@@ -54,6 +47,16 @@ public class MenuController {
             method = RequestMethod.GET)
     public ResponseEntity findAll() {
         return menuSerive.getAll();
+    }
+
+    @RequestMapping(
+            value="/getImage",
+            params = {"imageId"},
+            method = RequestMethod.GET,
+            produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE}
+    )
+    public @ResponseBody byte[] getImage(@RequestParam("imageId") int id){
+        return menuSerive.getimage(id);
     }
 
     @PostMapping(
