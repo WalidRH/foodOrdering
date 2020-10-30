@@ -11,14 +11,12 @@ import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementExistExcep
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.ElementNotFoundException;
 import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.MediaNotSupportedException;
 import com.FoodOrdering.app.FoodOrderingApp.service.enums.ImageFormat;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -32,9 +30,10 @@ import javax.imageio.ImageIO;
 import java.util.List;
 
 @Service
-public class MenuServiceImpl implements MenuService,Serializable {
+public class MenuServiceImpl implements MenuService, Serializable {
 
-    private static final String rootPath = "classpath:images/categories/";
+    private static final String ROOT_PATH = "src/main/resources/images/categories/";
+    private static final String ROOT_CLASSPATH = "classpath:images/categories/";
     @Autowired
     private MenuConnectorImpl menuConnector;
 
@@ -48,7 +47,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
             Menu menu_ = menuConnector.saveMenu(menu);
             model = setModel(menu_);
         } else
-            throw new ElementExistException("Meal already exist");
+            throw new ElementExistException("Menu already exist");
         return ok(model);
     }
 
@@ -60,7 +59,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
             Menu menu_ = menuConnector.editMenu(menu);
             model = setModel(menu_);
         } else
-            throw new ElementNotFoundException("Meal deosn't exist");
+            throw new ElementNotFoundException("Menu deosn't exist");
         return ok(model);
     }
 
@@ -71,7 +70,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
         if (menu != null) {
             model = setModel(menu);
         } else {
-            throw new ElementNotFoundException("Meal deosn't exist");
+            throw new ElementNotFoundException("Menu deosn't exist");
         }
         return ok(model);
 
@@ -84,7 +83,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
         if (menu != null) {
             model = setModel(menu);
         } else {
-            throw new ElementNotFoundException("Meal deosn't exist");
+            throw new ElementNotFoundException("Menu deosn't exist");
         }
         return ok(model);
     }
@@ -147,7 +146,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
 
     private byte[] getImageByte(String imageCategorie, String imageFileName) {
         try {
-            Resource resource = resourceLoader.getResource(this.rootPath + imageCategorie + "/" + imageFileName);
+            Resource resource = resourceLoader.getResource(this.ROOT_CLASSPATH + imageCategorie + "/" + imageFileName);
             InputStream input = resource.getInputStream();
             return IOUtils.toByteArray(input);
         } catch (IOException e) {
@@ -163,7 +162,7 @@ public class MenuServiceImpl implements MenuService,Serializable {
             String imgFormat = setImageTypeFormat(imageFormat);
             if (imgFormat != null) {
                 bImage2 = ImageIO.read(bis);
-                ImageIO.write(bImage2, imgFormat, new File(this.rootPath + category + "/" + imageName));
+                ImageIO.write(bImage2, imgFormat, new File(this.ROOT_PATH + category + "/" + imageName));
                 return true;
             } else {
                 throw new MediaNotSupportedException("Unsupported Media Type");
