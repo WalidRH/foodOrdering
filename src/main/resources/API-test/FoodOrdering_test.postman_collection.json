@@ -113,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ref\": 0,\n    \"quantity\": 1.0,\n    \"client\": {\n        \"firstName\": \"Walid\",\n        \"lastName\": \"RH\",\n        \"role\": \"ADMIN\",\n        \"idclient\": \"402881e9738852b90173885944530001\",\n        \"email\": \"RahouwWalid17@gmail.com\"\n    },\n    \"trackingStatus\": \"Onprepared\",\n    \"menu\": {\n        \"ref\": 3,\n        \"categorie\": \"sandwich\",\n        \"price\": 25.0,\n        \"name\": \"burger\"\n    },\n    \"orderDate\": \"2020-10-04T14:57:49.140+00:00\"\n}",
+							"raw": "    {\n        \"ref\": 7,\n        \"quantity\": 3.0,\n        \"totalPrice\": 108.0,\n        \"client\": {\n            \"firstName\": \"Walid\",\n            \"lastName\": \"RH\",\n            \"role\": \"ADMIN\",\n            \"idclient\": \"402881e9738852b90173885944530001\",\n            \"email\": \"RahouwWalid17@gmail.com\"\n        },\n        \"trackingStatus\": \"Submitted\",\n        \"menu\": {\n            \"ref\": 1,\n            \"categorie\": \"plat\",\n            \"price\": 36.0,\n            \"name\": \"emince Poulet\"\n        },\n        \"orderDate\": \"2020-08-09T18:52:51.000+00:00\"\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,7 +376,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{localBasedURL}}/order/DeleteOrder?id=66",
+							"raw": "{{localBasedURL}}/order/DeleteOrder?id=19",
 							"host": [
 								"{{localBasedURL}}"
 							],
@@ -387,7 +387,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "66"
+									"value": "19"
 								}
 							]
 						}
@@ -476,6 +476,40 @@
 					"response": []
 				},
 				{
+					"name": "getImageByte",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedURL}}/menu/find?id=1",
+							"host": [
+								"{{localBasedURL}}"
+							],
+							"path": [
+								"menu",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "FindMenuByName",
 					"request": {
 						"auth": {
@@ -526,7 +560,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"burger\",\n    \"price\": 25\n}",
+							"raw": "{\n    \"name\": \"pizza\",\n    \"price\": 25\n}",
 							"options": {
 								"raw": {
 									"language": "json"
