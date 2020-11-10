@@ -161,8 +161,9 @@ public class MenuServiceImpl implements MenuService, Serializable {
         try {
             String imgFormat = setImageTypeFormat(imageFormat);
             if (imgFormat != null) {
+                ClassLoader classLoader = getClass().getClassLoader();
                 bImage2 = ImageIO.read(bis);
-                ImageIO.write(bImage2, imgFormat, new File(this.ROOT_PATH + category + "/" + imageName));
+                ImageIO.write(bImage2, imgFormat, new File(classLoader.getResource("images/categories/" + category + "/" + imageName).getFile()));
                 return true;
             } else {
                 throw new MediaNotSupportedException("Unsupported Media Type");
