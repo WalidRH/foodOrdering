@@ -13,6 +13,8 @@ import com.FoodOrdering.app.FoodOrderingApp.Handler.Exceptions.MediaNotSupported
 import com.FoodOrdering.app.FoodOrderingApp.service.enums.ImageFormat;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
@@ -32,8 +34,12 @@ import java.util.List;
 @Service
 public class MenuServiceImpl implements MenuService, Serializable {
 
-    private static final String ROOT_PATH = "src/main/resources/images/categories/";
-    private static final String ROOT_CLASSPATH = "classpath:images/categories/";
+    @Value("${imagePath}")
+    private String IMAGE_PATH;
+
+    @Value("${imagePathResourceLoader}")
+    private String IMAGE_PATH_LOADER;
+
     @Autowired
     private MenuConnectorImpl menuConnector;
 
@@ -146,7 +152,7 @@ public class MenuServiceImpl implements MenuService, Serializable {
 
     private byte[] getImageByte(String imageCategorie, String imageFileName) {
         try {
-            Resource resource = resourceLoader.getResource(this.ROOT_CLASSPATH + imageCategorie + "/" + imageFileName);
+            Resource resource = resourceLoader.getResource(this.IMAGE_PATH_LOADER + imageCategorie + "/" + imageFileName);
             InputStream input = resource.getInputStream();
             return IOUtils.toByteArray(input);
         } catch (IOException e) {
@@ -162,7 +168,9 @@ public class MenuServiceImpl implements MenuService, Serializable {
             String imgFormat = setImageTypeFormat(imageFormat);
             if (imgFormat != null) {
                 bImage2 = ImageIO.read(bis);
-                ImageIO.write(bImage2, imgFormat, new File(this.ROOT_PATH + category + "/" + imageName));
+                System.out.println("IMAGE ClassPaTH: "+ this.IMAGE_PATH);
+                File imageFile = new File(this.IMAGE_PATH + category + "/" + imageName);
+                ImageIO.write(bImage2, imgFormat, imageFile );
                 return true;
             } else {
                 throw new MediaNotSupportedException("Unsupported Media Type");
