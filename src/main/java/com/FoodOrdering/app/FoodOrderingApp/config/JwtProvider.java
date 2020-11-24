@@ -91,7 +91,7 @@ public class JwtProvider {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             if (claims.getBody().getExpiration().before(new Date())) {
-            	System.out.println("Expiration" + claims.getBody().getExpiration().before(new Date()));
+            	System.out.println("Expiration " + claims.getBody().getExpiration().before(new Date()));
                 return false;
             }
             return true;
