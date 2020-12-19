@@ -12,4 +12,14 @@ this project will have 3 main classes:
 the project will be devided into 5 layers.
 ![alt text](https://github.com/WalidRH/foodOrdering/blob/workingBranch/src/main/resources/layers.png)
 
+# Environement Setup
+After a git clone, 
+* create a database with a name " food_ordering " and import the " database.sql " file.
+* check the propertie file; your environment should be pointed to localhost at first. Something like:
+```properties
+
+ spring.datasource.url=jdbc:mysql://localhost:3306/food_ordering?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+
+```
+
  
